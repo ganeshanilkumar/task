@@ -1,0 +1,8 @@
+API:
+
+https://desisfdeveloper.wordpress.com/2016/07/13/salesforce-tooling-api-create-update-and-delete-apex-class-dynamically-using-tooling-api-with-rest-api/
+
+
+records share though apex:
+
+https://www.jitendrazaa.com/blog/salesforce/apex-based-sharing-in-salesforce/
