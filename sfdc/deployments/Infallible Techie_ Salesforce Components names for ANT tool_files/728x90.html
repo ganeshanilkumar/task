@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!-- saved from url=(0146)https://s0.2mdn.net/ads/richmedia/studio/pv2/60844022/20180921130138182/728x90.html?e=69&renderingType=2&leftOffset=0&topOffset=0&c=WOc8deEQUn&t=1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> 
+<meta name="ad.size" content="width=728,height=90">
+
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<title>728x90</title>
+<style>
+html, body{
+	margin: 0;
+	padding: 0;
+	background-color: #FFFFFF;
+	-moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+	 user-select: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-touch-callout: none;                
+    -webkit-text-size-adjust: none;  
+}
+#canvas{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	-moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+	 user-select: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-touch-callout: none;                
+    -webkit-text-size-adjust: none; 
+	cursor: pointer;
+}
+#border{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: calc(728px - 2px);
+	height: calc(90px - 2px);
+	border: 1px solid #000000;
+	pointer-events: none;
+}
+#adAlt{
+	/* placeholder reference to a div that is created by AdHelper when displaying backup image */
+}
+</style>
+<script>
+var clickTag = "",
+	canvas, 
+	stage, 
+    exportRoot, 
+    anim_container, 
+    dom_overlay_container, 
+    fnStartAnimation,
+    adWidth = 728,
+    adHeight = 90,
+    isRetina,
+    ad,
+    failCount = 0,
+    adHelperLib,
+    userZip,
+    userDMACode,
+    userState,
+    userCountry,
+	userBandwidth,
+    hasUserInteracted,
+    deviceOrientation,
+    hasTouched = false,
+    hasTouchMoved = false;
+function doClickthrough(evt){
+	//if(evt && evt.nativeEvent.which === 3){ return; } 
+	Enabler.exit('Background Exit');
+}
+function init() {
+	if(Enabler.isInitialized()){
+		enablerInitialized();
+	}else{
+		Enabler.addEventListener(studio.events.StudioEvent.INIT, enablerInitialized);
+	};
+}
+function enablerInitialized() {
+  if (!Enabler.isVisible()) {
+    Enabler.addEventListener(studio.events.StudioEvent.VISIBLE, startAd);
+  } else {
+     startAd();
+  }
+}
+function startAd() {
+	userZip = Enabler.getUserZipCode(); 
+	userDMACode = Enabler.getUserDMACode();
+	userState = Enabler.getUserState();
+	userCountry = Enabler.getUserCountry();
+	userBandwidth = Enabler.getUserBandwidth();
+	hasUserInteracted = Enabler.hasUserInteracted();
+	deviceOrientation = Enabler.getOrientation();
+ 	canvas = document.getElementById("canvas");
+    anim_container = document.getElementById("animation_container");
+	dom_overlay_container = document.getElementById("dom_overlay_container");
+    if(!createjs.AdHelper.isSupported()){
+        //createjs.AdHelper.showAltImage(canvas, "backup_300x250.jpg", clickTag, "Adobe Animate CC", "_blank");
+    }
+	var comp=AdobeAn.getComposition("26821785911F4BD59B7112D85822C144");
+	var lib=comp.getLibrary();
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
+	loader.addEventListener("complete", function(evt){handleComplete(evt,comp)});
+	var lib=comp.getLibrary();
+	loader.loadManifest(lib.properties.manifest);
+	adHelperLib = lib;
+}
+function handleFileLoad(evt, comp) {
+	var images=comp.getImages();	
+	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }	
+}
+function handleComplete(evt,comp) {
+//this function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage
+	var lib=comp.getLibrary();
+	var ss=comp.getSpriteSheet();
+	var queue = evt.target;
+	var ssMetadata = lib.ssMetadata;
+	for(i=0; i<ssMetadata.length; i++) {
+		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
+	}
+	var preloaderDiv = document.getElementById("_preload_div_");
+	preloaderDiv.style.display = 'none';
+	canvas.style.display = 'block';
+	exportRoot = new lib._728x90();
+	stage = new lib.Stage(canvas);
+	stage.enableMouseOver();
+//enable touch events for mobile devices
+//createjs.Touch.enable(stage);
+//enable mouseover events for buttons and movieclips by default
+stage.enableMouseOver();
+//set to true to ensure display objects are positioned on whole pixels
+//stage.snapToPixelEnabled = false;
+//clickthrough handling
+exportRoot.hit_btn.on("ontouchstart", function(e){
+	e.stopPropagation();
+	e.preventDefault();
+	hasTouched = true;
+});
+exportRoot.hit_btn.on("ontouchmove", function(e){
+	e.stopPropagation();
+	e.preventDefault();
+	hasTouchMoved = true;
+});
+exportRoot.hit_btn.on("ontouchend", function(e){
+	e.stopPropagation();
+	e.preventDefault();
+	if(!hasTouchMoved){
+	doClickthrough();
+	}else{
+	hasTouchMoved = false;
+	}
+});
+exportRoot.hit_btn.on("mousedown", function(e){
+	e.stopPropagation();
+	e.preventDefault();
+	hasTouched = true;
+});
+exportRoot.hit_btn.on("mouseup", function(e){
+	e.stopPropagation();
+	e.preventDefault();
+	doClickthrough();
+});
+exportRoot.hit_btn.on("click", function(e){
+	e.stopPropagation();
+	e.preventDefault();
+	doClickthrough();
+});
+//ticker uses the requestAnimationFrame API to drive animation ticks, but attempts to synch the ticks to targeted framerate within the FLA
+//this mode has a higher variance for time between frames than TIMEOUT, but does not require that content be time based as with RAF, while gaining the benefits of the API (screen synch repaints, background throttling). 
+//variance is usually lowest for framerates that are a divisor of the RAF frequency. This is usually 60, so framerates of 10, 12, 15, 20, and 30 work well. 
+//falls back to TIMEOUT if the requestAnimationFrame API is not supported. 
+createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;	
+//registers the "tick" event listener
+fnStartAnimation = function() {
+		stage.addChild(exportRoot);
+		createjs.Ticker.setFPS(lib.properties.fps);
+		createjs.Ticker.addEventListener("tick", stage);
+	}	    
+//uncomment this token to enable Animate's native support for hi-dpi screens and responsive scaling
+/* 
+	function makeResponsive(isResp, respDim, isScale, scaleType) {		
+		var lastW, lastH, lastS=1;		
+		window.addEventListener('resize', resizeCanvas);		
+		resizeCanvas();		
+		function resizeCanvas() {			
+			var w = lib.properties.width, h = lib.properties.height;			
+			var iw = window.innerWidth, ih=window.innerHeight;			
+			var pRatio = window.devicePixelRatio || 1, xRatio=iw/w, yRatio=ih/h, sRatio=1;			
+			if(isResp) {                
+				if((respDim=='width'&&lastW==iw) || (respDim=='height'&&lastH==ih)) {                    
+					sRatio = lastS;                
+				}				
+				else if(!isScale) {					
+					if(iw<w || ih<h)						
+						sRatio = Math.min(xRatio, yRatio);				
+				}				
+				else if(scaleType==1) {					
+					sRatio = Math.min(xRatio, yRatio);				
+				}				
+				else if(scaleType==2) {					
+					sRatio = Math.max(xRatio, yRatio);				
+				}			
+			}			
+			canvas.width = w*pRatio*sRatio;			
+			canvas.height = h*pRatio*sRatio;
+			canvas.style.width = anim_container.style.width = dom_overlay_container.style.width = preloaderDiv.style.width = w*sRatio+'px';				
+			canvas.style.height = anim_container.style.height = dom_overlay_container.style.height = preloaderDiv.style.height = h*sRatio+'px';
+			stage.scaleX = pRatio*sRatio;			
+			stage.scaleY = pRatio*sRatio;			
+			lastW = iw; lastH = ih; lastS = sRatio;            
+			stage.tickOnUpdate = false;            
+			stage.update();            
+			stage.tickOnUpdate = true;		
+		}
+	}
+	makeResponsive(false,'both',false,1); */
+//adhelper set-up
+ad = new createjs.AdHelper(stage)
+		.setSleep(30,0,0)
+		.timeSync()
+		//.watchFPS(20, 1)
+		.highDPI(true, 1);
+	if (ad.pixelRatio > 1) {
+        isRetina = true;
+    }else{
+    	isRetina = false;
+    }
+	ad.on("slow", function(evt) {
+		if (failCount === 0) {
+			//evt.preventDefault(); 
+			//failCount++; 
+			//this.watchFPS(20, 1); 
+		} else if (failCount === 1){
+			//createjs.AdHelper.showAltImage(canvas, "backup_300x250.jpg", clickTag, "Adobe Animate CC", "_blank");
+		}
+	});
+    // trace out adhelper events for testing purposes
+	ad.on("sleep", trace);
+	ad.on("wake", trace);
+	ad.on("slow", trace);
+	function trace(evt) {
+		//console.log("event: " + evt.type);
+	};
+	AdobeAn.compositionLoaded(lib.properties.id);
+	fnStartAnimation();
+}
+</script>
+</head>
+<body onload="init();" style="margin:0px;">
+	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:728px; height:90px">
+		<canvas id="canvas" width="728" height="90" style="position: absolute; display: block; background-color: rgb(255, 255, 255); width: 728px; height: 90px;"></canvas>
+		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:728px; height:90px; position: absolute; left: 0px; top: 0px; display: none;">
+		</div>
+	</div>
+    <div id="border"></div>
+    <div id="_preload_div_" style="position: absolute; top: 0px; left: 0px; display: none; height: 90px; width: 728px; text-align: center;">	<span style="display: inline-block; height: 100%; vertical-align: middle;"></span>	<img src="./_preloader.gif" style="vertical-align: middle; max-height: 100%"></div>
+ <!-- doubleclick studio enabler -->
+ <script src="./Enabler_01_230.js.download"></script>   
+<!-- doubleclick greensock -->
+<script src="./tweenmax_1.18.0_499ba64a23378545748ff12d372e59e9_min.js.download"></script>
+<!-- doubleclick createjs -->
+<script src="./createjs_2015.11.26_54e1c3722102182bb133912ad4442e19_min.js.download"></script>
+<!-- minified adhelper -->
+<script>
+this.createjs=this.createjs||{},function(){"use strict";function e(e){this._stage=e,this.tickListener=null,this.awake=!0,this.sleepEnabled=!1,this.hidden=!1,this.pixelRatio=this._getBackingRatio(),this._time=0,this._awake=!0,this._sleepy=!1,this._sleepT=0,this._sleepMousedownT=null,this._sleepInBoundsT=null,this._sleepUseTicks=!1,this._mouseInDoc=!1,this._perfDelay=0,this._perfCount=0,this._perfThreshold=0,this._perfFPS=0,this._width=e.canvas.width,this._height=e.canvas.height,createjs.Ticker.on("tick",this)}var t=e.prototype;createjs.EventDispatcher&&(t=e.prototype=new createjs.EventDispatcher),e.isSupported=function(){return!!window.CanvasRenderingContext2D},e.showAltImage=function(t,i,s,n,h){return e.showAltHTML(t,(s?"<a target='"+(h||"_blank")+"' href='"+s+"'>":"")+"<img src='"+i+"' border='0' alt='"+(n||"")+"'>"+(s?"</a>":""))},e.showAltHTML=function(t,i){var s=document.createElement("div");return s.innerHTML=i||"",s.id="adAlt",e.showAlt(t,s)},e.showAlt=function(e,t){return"string"==typeof e&&(e=document.getElementById(e)),t.style.display="block",e.parentNode.replaceChild(t,e),t},t.timeSync=function(e){var t=void 0!==this._stage.masterFrameRate;if(this._stage.masterFrameRate=e||adHelperLib&&adHelperLib.properties&&adHelperLib.properties.fps||this._getTickerFPS(),t)return this;var i=createjs.Stage.prototype,s=createjs.MovieClip.prototype;return i.__tick=i._tick,i._tick=function(e){e.stage=this,this.__tick(e)},s.__tick=s._tick,s._tick=function(e){!this.ignoreMasterFrameRate&&e.stage&&(this.framerate=e.stage.masterFrameRate||null),this.__tick(e)},this},t.watchFPS=function(e,t){return this._perfFPS=e||.9*this._getTickerFPS()-1|0,this._perfThreshold=t||1,this._perfCount=0,this._perfDelay=5,this},t.highDPI=function(e,t){t=t||1;var i=this._getBackingRatio(),s=Math.max(1,(window.devicePixelRatio||1)/i),n=this._stage,h=n.canvas,a=h.style,r=this._width/t,o=this._height/t;return e===!1&&(s=1/i),h.width=r*s,h.height=o*s,a.width=r+"px",a.height=o+"px",n.scaleX=n.scaleY=s/t,this.pixelRatio=(1===i?s:e===!1?1:i)/t,this},t.setSleep=function(e,t,i,s,n){return null!=t&&stage.addEventListener("stagemousedown",this),null!=i&&(document.addEventListener("mouseout",this,!0),document.addEventListener("mousemove",this,!0)),this.tickListener=n||this._stage,this._sleepMousedownT=t,this._sleepInBoundsT=i,this._sleepUseTicks=!!s,this.sleepEnabled=!0,this._sleepy=!1,this._sleepT=null!=e?this._getTime()+1e3*e:0,this},t.sleep=function(e){return e?void(this._sleepT=this._getTime()+(e||0)):(this._sleepy=!1,this._sleepT=0,this._awake=!1,void this._sleep())},t.wake=function(e){this._sleepy=!1,null!=e?this._sleepT=Math.max(this._sleepT,this._getTime()+(e||0)):this._sleepT=0,this._awake=!0,this._wake()},t.handleEvent=function(e){if("tick"===e.type)this._tick(e);else if("stagemousedown"===e.type){var t=this._sleepMousedownT;this.sleepEnabled&&null!=t&&this.wake(1e3*t)}else"mousemove"===e.type?this._mouseInDoc=!0:"mouseout"===e.type&&(this._mouseInDoc=!1)},t._getTickerFPS=function(){return createjs.Ticker.timingMode==createjs.Ticker.RAF?60:createjs.Ticker.framerate},t._sleep=function(){this.awake&&(createjs.Ticker.paused=!0,this.tickListener&&createjs.Ticker.removeEventListener("tick",this.tickListener),window.TweenLite&&TweenLite.ticker&&TweenLite.ticker.sleep(),this.dispatchEvent("sleep"),this.awake=!1)},t._wake=function(){if(!this.awake){if(createjs.Ticker.paused=!1,this.tickListener&&createjs.Ticker.addEventListener("tick",this.tickListener),window.TweenLite){var e=TweenLite.ticker,t=e.frame;e.frame=1,e.wake(!0),e.frame=t}this.dispatchEvent("wake"),this.awake=!0}},t._tick=function(e){if(document.hidden||document.webkitHidden||document.mozHidden)return this.hidden=!0,this._sleep(),void(createjs.Sound&&(createjs.Sound.muted=!0));this.hidden&&(this.hidden=!1,this._awake&&this._wake(),this._perfDelay=3,createjs.Sound&&(createjs.Sound.muted=!1)),this._time+=this._sleepUseTicks?1:e.delta;var t;if(this._perfFPS&&--this._perfDelay<=0&&(t=createjs.Ticker.getMeasuredFPS(1))>-1){var i=1-Math.max(0,Math.min(1,t/this._perfFPS));this._perfCount=Math.max(0,this._perfCount+(0===i?-.2:i*i*.5+.1)),this._perfCount>this._perfThreshold&&(this._perfFPS=0,this.dispatchEvent(new createjs.Event("slow",!1,!0))&&(this.sleep(),this.sleepEnabled=!1))}this.sleepEnabled&&(null!=this._sleepInBoundsT&&this._stage.mouseInBounds&&this._mouseInDoc&&this.wake(1e3*this._sleepInBoundsT),this._sleepy?this.sleep():this._sleepT&&this._getTime()>=this._sleepT&&(this._sleepy=!0))},t._getTime=function(){return this._time},t._getBackingRatio=function(){var e=this._stage.canvas.getContext("2d");return e.backingStorePixelRatio||e.webkitBackingStorePixelRatio||e.mozBackingStorePixelRatio||e.msBackingStorePixelRatio||e.oBackingStorePixelRatio||1},createjs.AdHelper=e}();
+</script>
+<!-- adobe animate CC FLA JS -->
+<script src="./728x90.js.download"></script> 
+<!-- 
+<script src="728x90.js"></script> -->
+
+</body></html>

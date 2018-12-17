@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>Salesforce Colored Favicons - Options</title>
+		<style>
+			body {
+				background: #909090;
+				font-family: Verdana, Geneva, sans-serif;
+			}
+			#logo {
+				vertical-align: middle;
+			}
+			#title {
+				font-size: 22pt;
+				font-weight: bold;
+				color: white;
+				margin: 5px;
+			}
+			#main-cont {
+				width: 800px;
+				margin: 0 auto;
+			}
+			#opt-cont {
+				padding: 15px;
+				background: white;
+				border-radius: 5px;
+			}
+			#hex-table {
+				width: 80%;
+				margin: 0 10%;
+			}
+			.icon, .color {
+				margin-right: 10px;
+			}
+			#save {
+				margin: 20px 45% 0 45%;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div id="main-cont">
+			<div id="title">
+				<img id="logo" src="icon128.png" height="48" width="48"/>
+				Salesforce Colored Favicons - Options
+			</div>
+			<div id="opt-cont">
+				<table id="hex-table">
+					<thead>
+						<tr>
+							<th style="width:60%;text-align:left;">Instance</th>
+							<th style="width:40%;">Color</th>
+						</tr>
+					</thead>
+					<tbody id="table-body"/>
+				</table>
+				<button id="save">Save</button>
+			</div>
+		</div>
+	</body>
+	
+	<script type="text/javascript" src="jscolor/jscolor.js"></script>
+	<script type="text/javascript" src="options.js"></script>
+</html>

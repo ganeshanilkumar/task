@@ -1,0 +1,29 @@
+{
+   "background": {
+      "persistent": false,
+      "scripts": [ "background.js" ]
+   },
+   "content_scripts": [ {
+      "js": [ "content_script.js" ],
+      "matches": [ "https://*/*" ]
+   } ],
+   "description": "Compare Record data values and object metadata in Salesforce",
+   "icons": {
+      "128": "sfprodiff128x128.png",
+      "16": "sfprodiff16x16.png",
+      "19": "sfprodiff19x19.png",
+      "48": "sfprodiff48x48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAncgG+usrGtk2tKiQZVXS7VOxf65u6Z8aYEoyMA0XrMjeYqbSg69d9hjCPy721gqaqA88Nkkz58y3gnyxA/EYd9/J3HXjRDV6cybjupjlz/J9dKWZPPyJA3mWb9QZNb01wCQ0pUvFQVAStz0ZGVKFJNQqYa3bYU1F+8PYrACT9QdD/wm1XPxw9vU6w/20yoZC2OdSWA8wqmvHeU9fCK6oRqyIpjwOGBwXMb4jbxDdo/xli2piQBlmZ+AfMG5GN+Lq1wjk4fDoAd9fc+t4pEFkjduQw9zF3cRiRm5CrrQhsS3SYHL/b7cBQdgQVWveNhnWCH6hYbXj+AaJzNfHdu4JDwIDAQAB",
+   "manifest_version": 2,
+   "name": "Record and Metadata Comparator for Salesforce",
+   "page_action": {
+      "default_icon": "sfprodiff16x16.png",
+      "default_name": "Record and Metdata Comparator for Salesforce",
+      "default_popup": "popup.html"
+   },
+   "permissions": [ "https://*.salesforce.com/", "tabs", "declarativeContent" ],
+   "short_name": "Salesforce Record and Metadata Comparator",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.0.0.7"
+}

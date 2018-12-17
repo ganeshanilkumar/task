@@ -1,0 +1,21 @@
+{
+   "background": {
+      "scripts": [ "background.js" ]
+   },
+   "content_scripts": [ {
+      "js": [ "contentscript.js" ],
+      "matches": [ "https://*.salesforce.com/*", "https://*.force.com/*" ],
+      "run_at": "document_idle"
+   } ],
+   "description": "Overrides the standard salesforce favicon with one colored based on the org. Also, displays a separate icon for sandbox instances.",
+   "icons": {
+      "128": "icon128.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgzIqCzfYKzQJ7sF5kne05wqy4LAuzFbC2Lx7qfmKm/FRHfJ58FlrafZOluOAvXct1UIoMsKCW3xSjhKAAdwQjwgHuHttQgkZlVf6m3gLSKF6ed5VeFeEgpffYehbWT6glRdwQxjckQ0BR+Ol7m4/nVPEy4lal3MScRtOY5xrcAcV/ZDQyxo8cqo5MnInvtwj896Ll5+hlky6HGC/P2asnaTlS6Nkr1gJk8eUwVbEbsc68xQ4s2gjrtWC6wn9YKNjFHa0wgpd64NBe2q3K7Q/ZjBx9xxPDUiaifQaEUS3fqWnM74agb2btNeMKEPyFGWtJwDFMiesgwHjt2V5g2NkrQIDAQAB",
+   "manifest_version": 2,
+   "name": "Salesforce Colored Favicons",
+   "options_page": "options.html",
+   "permissions": [ "http://*/*", "tabs", "https://*/*", "chrome://favicon/" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.2.1"
+}

@@ -1,0 +1,16 @@
+Set<Id> Opps = new Set<Id>{'00520000004ryaQAAQ','0050O000007Me2HQAS'};
+List<PermissionSetAssignment> nl = [select id,  PermissionSetId , AssigneeId from PermissionSetAssignment where AssigneeId IN: Opps];
+System.debug(nl.size());
+for(PermissionSetAssignment A:nl ){
+system.debug(A.Id+'###'+A.PermissionSetId+'***'+A.AssigneeId+'****');
+} 
+
+
+
+SELECT ID , NAME, Status__c, Description__c FROM Work_Assignment__c where Name__r.Name like '%Anil%' order by Status__c
+
+
+dir /b /s |clip
+
+
+select id,NamespacePrefix, Status, UsedLicenses,  AllowedLicenses from PackageLicense where NamespacePrefix in ('Apttus' , 'Apttus_Approval','Apttus_DocGen')
