@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+<head><link rel="stylesheet" type="text/css" href="https://www.jitendrazaa.com/blog/wp-content/cache/minify/0ce6a.css" media="all" />
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+		<link rel="pingback" href="https://www.jitendrazaa.com/blog/xmlrpc.php">
+		<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>Complete Salesforce Deployment Guide using Ant Migration Tool &#8211; Jitendra Zaa&#039;s Blog</title>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Jitendra Zaa&#039;s Blog &raquo; Feed" href="https://www.jitendrazaa.com/blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Jitendra Zaa&#039;s Blog &raquo; Comments Feed" href="https://www.jitendrazaa.com/blog/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Jitendra Zaa&#039;s Blog &raquo; Complete Salesforce Deployment Guide using Ant Migration Tool Comments Feed" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.jitendrazaa.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.1"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+
+
+
+
+<link rel='stylesheet' id='twentysixteen-fonts-css'  href='https://fonts.googleapis.com/css?family=Merriweather%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic%7CMontserrat%3A400%2C700%7CInconsolata%3A400&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
+
+
+
+<!--[if lt IE 10]>
+<link rel='stylesheet' id='twentysixteen-ie-css'  href='https://www.jitendrazaa.com/blog/wp-content/themes/twentysixteen/css/ie.css?ver=20160816' type='text/css' media='all' />
+<![endif]-->
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentysixteen-ie8-css'  href='https://www.jitendrazaa.com/blog/wp-content/themes/twentysixteen/css/ie8.css?ver=20160816' type='text/css' media='all' />
+<![endif]-->
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='twentysixteen-ie7-css'  href='https://www.jitendrazaa.com/blog/wp-content/themes/twentysixteen/css/ie7.css?ver=20160816' type='text/css' media='all' />
+<![endif]-->
+
+
+
+<!--[if lt IE 9]>
+<script type='text/javascript' src='https://www.jitendrazaa.com/blog/wp-content/themes/twentysixteen/js/html5.js?ver=3.7.3'></script>
+<![endif]-->
+<script type="text/javascript" src="https://www.jitendrazaa.com/blog/wp-content/cache/minify/43fd6.js"></script>
+
+
+<link rel='https://api.w.org/' href='https://www.jitendrazaa.com/blog/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.jitendrazaa.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.jitendrazaa.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='SAP R/3 Security &#8211; Interview Questions' href='https://www.jitendrazaa.com/blog/others/sap/sap-r3-security-interview-questions/' />
+<link rel='next' title='S_TABU_NAM: An advanced authorization object for generic table access' href='https://www.jitendrazaa.com/blog/others/sap/s_tabu_nam-an-advanced-authorization-object-for-generic-table-access/' />
+<meta name="generator" content="WordPress 5.0.1" />
+<link rel="canonical" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/" />
+<link rel='shortlink' href='https://www.jitendrazaa.com/blog/?p=2892' />
+<link rel="alternate" type="application/json+oembed" href="https://www.jitendrazaa.com/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.jitendrazaa.com%2Fblog%2Fsalesforce%2Fsalesforce-migration-tool-ant%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.jitendrazaa.com/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.jitendrazaa.com%2Fblog%2Fsalesforce%2Fsalesforce-migration-tool-ant%2F&#038;format=xml" />
+
+<link rel='dns-prefetch' href='//jetpack.wordpress.com'/>
+<link rel='dns-prefetch' href='//s0.wp.com'/>
+<link rel='dns-prefetch' href='//s1.wp.com'/>
+<link rel='dns-prefetch' href='//s2.wp.com'/>
+<link rel='dns-prefetch' href='//public-api.wordpress.com'/>
+<link rel='dns-prefetch' href='//0.gravatar.com'/>
+<link rel='dns-prefetch' href='//1.gravatar.com'/>
+<link rel='dns-prefetch' href='//2.gravatar.com'/>
+<style type='text/css'>img#wpstats{display:none}</style>		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+			<style type="text/css" id="twentysixteen-header-css">
+		.site-branding {
+			margin: 0 auto 0 0;
+		}
+
+		.site-branding .site-title,
+		.site-description {
+			clip: rect(1px, 1px, 1px, 1px);
+			position: absolute;
+		}
+	</style>
+	<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #ffffff; }
+</style>
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Complete Salesforce Deployment Guide using Ant Migration Tool" />
+<meta property="og:url" content="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/" />
+<meta property="og:description" content="Step by Step tutorial of Salesforce Migration using ANT tool with Proxy settings and retrieving content from Salesforce Organization. Also fix some common errors like java.lang.OutOfMemoryError or …" />
+<meta property="article:published_time" content="2012-06-05T13:21:15+00:00" />
+<meta property="article:modified_time" content="2018-11-09T21:49:55+00:00" />
+<meta property="og:site_name" content="Jitendra Zaa&#039;s Blog" />
+<meta property="og:image" content="https://jitendrazaa.com/blog/wp-content/uploads/2012/06/Salesforce-Migration-using-ANT-Original.png" />
+<meta property="og:image:width" content="624" />
+<meta property="og:image:height" content="312" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@JitendraZaa" />
+<meta name="twitter:text:title" content="Complete Salesforce Deployment Guide using Ant Migration Tool" />
+<meta name="twitter:card" content="summary" />
+
+<!-- End Jetpack Open Graph Tags -->
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+</head>
+
+<body class="post-template-default single single-post postid-2892 single-format-standard custom-background wp-embed-responsive group-blog">
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+		<header id="masthead" class="site-header" role="banner">
+			<div class="site-header-main">
+				<div class="site-branding">
+					
+											<p class="site-title"><a href="https://www.jitendrazaa.com/blog/" rel="home">Jitendra Zaa&#039;s Blog</a></p>
+											<p class="site-description">Blog posts on Salesforce, Java, .Net, PHP, Heroku and many more</p>
+									</div><!-- .site-branding -->
+
+									<button id="menu-toggle" class="menu-toggle">Menu</button>
+
+					<div id="site-header-menu" class="site-header-menu">
+													<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+								<div class="menu-pages-container"><ul id="menu-pages" class="primary-menu"><li id="menu-item-5167" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5167"><a href="https://www.JitendraZaa.com">Home</a></li>
+<li id="menu-item-5166" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-5166"><a href="https://www.jitendrazaa.com/blog/">Blog</a></li>
+<li id="menu-item-5164" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5164"><a href="https://www.jitendrazaa.com/blog/videos/">Videos</a></li>
+<li id="menu-item-5165" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5165"><a href="https://www.jitendrazaa.com/blog/about-jitendrazaa/">About Me</a></li>
+<li id="menu-item-5400" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5400"><a href="https://www.jitendrazaa.com/blog/apex-design-patterns/">Apex Design Patterns – Salesforce</a></li>
+</ul></div>							</nav><!-- .main-navigation -->
+						
+											</div><!-- .site-header-menu -->
+							</div><!-- .site-header-main -->
+
+											<div class="header-image">
+					<a href="https://www.jitendrazaa.com/blog/" rel="home">
+						<img src="https://www.jitendrazaa.com/blog/wp-content/uploads/2016/01/Website-Header-Image-3.jpg" srcset="https://www.jitendrazaa.com/blog/wp-content/uploads/2016/01/Website-Header-Image-3-300x69.jpg 300w, https://www.jitendrazaa.com/blog/wp-content/uploads/2016/01/Website-Header-Image-3-768x178.jpg 768w, https://www.jitendrazaa.com/blog/wp-content/uploads/2016/01/Website-Header-Image-3-1024x237.jpg 1024w, https://www.jitendrazaa.com/blog/wp-content/uploads/2016/01/Website-Header-Image-3.jpg 1193w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 81vw, (max-width: 1362px) 88vw, 1200px" width="1193" height="276" alt="Jitendra Zaa&#039;s Blog">
+					</a>
+				</div><!-- .header-image -->
+					</header><!-- .site-header -->
+
+		<div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		
+<article id="post-2892" class="post-2892 post type-post status-publish format-standard hentry category-configuration category-salesforce tag-ant tag-ant-migration-tool tag-changeset tag-deployment tag-eclipse tag-java tag-salesforce tag-salesforce-migration">
+	<header class="entry-header">
+		<h1 class="entry-title">Complete Salesforce Deployment Guide using Ant Migration Tool</h1>	</header><!-- .entry-header -->
+
+	<div class="customMetaEntry"><span><span class="author vcard"><img alt='' src='https://secure.gravatar.com/avatar/30e112f7dd512c86ac3e25f10d669bd0?s=30&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/30e112f7dd512c86ac3e25f10d669bd0?s=60&#038;d=mm&#038;r=g 2x' class='avatar avatar-30 photo' height='30' width='30' /><span class="screen-reader-text"> Author </span> posted by <a class="url fn n" href="https://www.jitendrazaa.com/blog/author/admin/">Jitendra</a></span></span> on <span class="posted-on"><span class="screen-reader-text">Posted on </span><a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/" rel="bookmark"><time class="entry-date published" datetime="2012-06-05T18:51:15+00:00">June 5, 2012</time><time class="updated" datetime="2018-11-09T16:49:55+00:00">November 9, 2018</time></a></span> under category <span class="cat-links"><span class="screen-reader-text">Categories </span><a href="https://www.jitendrazaa.com/blog/category/salesforce/configuration/" rel="category tag">Configuration</a>, <a href="https://www.jitendrazaa.com/blog/category/salesforce/" rel="category tag">Salesforce</a></span> and tagged as <span class="tags-links"><span class="screen-reader-text">Tags </span><a href="https://www.jitendrazaa.com/blog/tag/ant/" rel="tag">ANT</a>, <a href="https://www.jitendrazaa.com/blog/tag/ant-migration-tool/" rel="tag">ANT Migration Tool</a>, <a href="https://www.jitendrazaa.com/blog/tag/changeset/" rel="tag">changeset</a>, <a href="https://www.jitendrazaa.com/blog/tag/deployment/" rel="tag">Deployment</a>, <a href="https://www.jitendrazaa.com/blog/tag/eclipse/" rel="tag">Eclipse</a>, <a href="https://www.jitendrazaa.com/blog/tag/java/" rel="tag">JAVA</a>, <a href="https://www.jitendrazaa.com/blog/tag/salesforce/" rel="tag">Salesforce</a>, <a href="https://www.jitendrazaa.com/blog/tag/salesforce-migration/" rel="tag">Salesforce Migration</a></span><span class="comments-link"> with <a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comments">31 Comments<span class="screen-reader-text"> on Complete Salesforce Deployment Guide using Ant Migration Tool</span></a></span></div><script type="application/ld+json">
+		{
+		  "@context": "http://schema.org",
+		  "@type": "NewsArticle",
+		  "mainEntityOfPage": {
+			"@type": "WebPage",
+			"@id": "https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/"
+		  },
+		  "headline": "Complete Salesforce Deployment Guide using Ant Migration Tool","image": {
+				"@type": "ImageObject",
+				"url": "https://www.jitendrazaa.com/blog/wp-content/uploads/2010/05/Profile-Pic-Copy.jpg",
+				"height": 250,
+				"width": 696
+			  },"datePublished": "June 5, 2012",
+			  "dateModified": "November 9, 2018",
+			  "author": {
+				"@type": "Person",
+				"name": "Jitendra Zaa"
+			  },
+			   "publisher": {
+				"@type": "Organization",
+				"name": "JitendraZaa",
+				"logo": {
+				  "@type": "ImageObject",
+				  "url": "https://www.jitendrazaa.com/blog/wp-content/uploads/2017/04/JitendraZaa-1.png",
+				  "width": 38,
+				  "height": 38
+				}
+			  },
+			  "potentialAction": {
+				"@type": "SearchAction",
+				"target": "https://www.jitendrazaa.com/blog/?s={search_term_string}",
+				"query-input": "required name={search_term_string}"
+			  },
+			  "description": "<p>Step by Step tutorial of Salesforce Migration using ANT tool with Proxy settings and retrieving content from Salesforce Organization. Also fix some common errors like java.lang.OutOfMemoryError or unable to find tools.jar</p>
+" } </script>			<div class="entry-summary">
+				<p>Step by Step tutorial of Salesforce Migration using ANT tool with Proxy settings and retrieving content from Salesforce Organization. Also fix some common errors like java.lang.OutOfMemoryError or unable to find tools.jar</p>
+			</div><!-- .entry-summary -->
+		
+	
+	<div class="entry-content">
+		<p style="text-align: justify;">Following are the many tools available for Salesforce deployment like</p>
+<ol>
+<li>Change sets (From Salesforce site)</li>
+<li>Eclipse (Using &#8220;Deploy to force.com server&#8221; option in Eclipse)</li>
+<li>ANT (Java based tool)</li>
+</ol>
+<p>We are going to discuss the ANT based migration, step by step:</p>
+<p><strong>Prerequisite:</strong><br />
+JDK 1.5 or above</p>
+<p><strong>Step 1:</strong><br />
+Download ANT distribution from &#8211; &#8220;<a title="Download ANT" href="http://ant.apache.org/bindownload.cgi" target="_blank" rel="nofollow noopener">http://ant.apache.org/bindownload.cgi</a>&#8221;</p>
+<p style="text-align: justify;"><strong>Step 2:</strong><br />
+Set Environment variable &#8220;<em>ANT_HOME</em>&#8220;. The path should be of parent folder of &#8220;bin&#8221;. Also add the &#8220;bin&#8221; folder to your path.</p>
+<p style="text-align: justify;"><strong>Step 3:</strong><br />
+Check whether ANT is installed or not properly by running command &#8220;<em>ant -version</em>&#8220;. It might be possible that you receive message something like <strong>unable to find tools.jar</strong>. You can copy this jar from &#8220;JDK_HOME/lib/tools.jar&#8221; to &#8220;JRE/lib&#8221; folder.</p>
+<p><span id="more-2892"></span></p>
+<figure id="attachment_3579" style="width: 624px" class="wp-caption aligncenter"><a href="https://jitendrazaa.com/blog/wp-content/uploads/2012/06/Salesforce-Get-ANT-version-Original.png"><img class="size-full wp-image-3579" src="https://jitendrazaa.com/blog/wp-content/uploads/2012/06/Salesforce-Get-ANT-version-Original.png" alt="Salesforce Get ANT version " width="624" height="318" /></a><figcaption class="wp-caption-text">Salesforce Get ANT version</figcaption></figure>
+<p>In above screen you can see that before copying <strong>tools.jar</strong> I was getting warning.</p>
+<p><strong>Step 4:</strong></p>
+<p style="text-align: justify;">Login to salesforce and navigate to <strong>&#8220;Your Name |Setup | Develop | Tools&#8221;</strong> and download <strong>&#8220;Force.com Migration tool&#8221;</strong>.</p>
+<p style="text-align: justify;">Unzip the downloaded file to the directory of your choice. Copy the <strong>&#8220;ant-salesforce.jar&#8221;</strong> file from the unzipped file into the ant lib directory.</p>
+<p style="text-align: justify;">To start with deployment using ANT, we will need <strong>&#8220;build.xml&#8221;</strong> and<strong> &#8220;build.properties&#8221;</strong> file. As there is no need of &#8220;build.properties&#8221; however its good to have it so that the configuration related settings are in different file. You can copy both files from &#8220;sample&#8221; folder of unzipped content from salesforce. Following is the structure of &#8220;build.properties&#8221; file.</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+# build.properties
+# Specify the login credentials for the desired Salesforce organization
+sf.username = &amp;amp;amp;amp;lt;SFDCUserName&amp;amp;amp;amp;gt;
+sf.password = &amp;amp;amp;amp;lt;SFDCPasswrd&amp;amp;amp;amp;gt;
+#sf.pkgName = &amp;amp;amp;amp;lt;Insert comma separated package names to be retrieved&amp;amp;amp;amp;gt;
+#sf.zipFile = &amp;amp;amp;amp;lt;Insert path of the zipfile to be retrieved&amp;amp;amp;amp;gt;
+#sf.metadataType = &amp;amp;amp;amp;lt;Insert metadata type name for which listMetadata or bulkRetrieve operations are to be performed&amp;amp;amp;amp;gt;
+# Use 'https://login.salesforce.com' for production or developer edition (the default if not specified).
+# Use 'https://test.salesforce.com for sandbox.
+sf.serverurl = https://test.salesforce.com
+</pre>
+<p style="text-align: justify;"><strong>Step 5:</strong><br />
+Copy all folders with source code from source organization using eclipse. Lets say the root folder name is &#8220;test1&#8221;.<br />
+Create <strong>&#8220;build.properties&#8221;</strong> from above code snippet or copy it from unzipped folder. Now create <strong>&#8220;build.xml&#8221;</strong> needed by ANT. Following is the example of build.xml file:</p>
+<pre class="brush: xml; title: ; notranslate" title="">
+&lt;project name=&quot;Shivasoft ANT Tutorial&quot; default=&quot;deployCode&quot; basedir=&quot;.&quot; xmlns:sf=&quot;antlib:com.salesforce&quot;&gt;
+    &lt;property file=&quot;build.properties&quot;/&gt;
+    &lt;property environment=&quot;env&quot;/&gt;
+    &lt;!-- Shows deploying code &amp;amp;amp;amp;amp; running tests for code in directory --&gt;
+    &lt;target name=&quot;deployCode&quot; depends=&quot;proxy&quot;&gt;
+      &lt;sf:deploy username=&quot;${sf.username}&quot; password=&quot;${sf.password}&quot; serverurl=&quot;${sf.serverurl}&quot; deployRoot=&quot;test1&quot;&gt;
+        &lt;runTest&gt;TestClassName&lt;/runTest&gt;
+      &lt;/sf:deploy&gt;
+    &lt;/target&gt;
+    &lt;!-- Shows removing code; only succeeds if done after deployCode --&gt;
+    &lt;target name=&quot;undeployCode&quot;&gt;
+      &lt;sf:deploy username=&quot;${sf.username}&quot; password=&quot;${sf.password}&quot; serverurl=&quot;${sf.serverurl}&quot; deployRoot=&quot;removecodepkg&quot;/&gt;
+    &lt;/target&gt;
+	&lt;target name=&quot;proxy&quot;&gt;
+		&lt;property name=&quot;proxy.host&quot; value=&quot; ProxyURL &quot; /&gt;
+		&lt;property name=&quot;proxy.port&quot; value=&quot;1234&quot; /&gt;
+		&lt;property name=&quot;proxy.user&quot; value=&quot;UserName&quot; /&gt;
+		&lt;property name=&quot;proxy.pwd&quot; value=&quot;Password&quot; /&gt;
+		&lt;setproxy proxyhost=&quot;${proxy.host}&quot; proxyport=&quot;${proxy.port}&quot; proxyuser=&quot;${proxy.user}&quot; proxypassword=&quot;${proxy.pwd}&quot; /&gt;
+	&lt;/target&gt;
+&lt;/project&gt;
+</pre>
+<p style="text-align: justify;">Attribute &#8220;<strong>deployRoot</strong>&#8221; means the root folder from which the code should be copied and tag  means the testclasses which should run after the deployment. At last, go to the folder &#8220;test1&#8221; from command line and run command &#8220;ant deployCode&#8221;.</p>
+<p>&nbsp;</p>
+<figure id="attachment_3578" style="width: 624px" class="wp-caption aligncenter"><a href="https://jitendrazaa.com/blog/wp-content/uploads/2012/06/Salesforce-Migration-using-ANT-Original.png"><img class="size-full wp-image-3578" src="https://jitendrazaa.com/blog/wp-content/uploads/2012/06/Salesforce-Migration-using-ANT-Original.png" alt="Salesforce Migration using-ANT " width="624" height="312" /></a><figcaption class="wp-caption-text">Salesforce Migration using-ANT</figcaption></figure>
+<p><span style="text-decoration: underline;"><strong>Checking the status of the task:</strong></span><br />
+To know the status of task you can run command:<br />
+Ant <strong>targetName </strong>-Dsf.asyncRequestId=<strong>requestID </strong></p>
+<p><span style="text-decoration: underline;"><strong>Using Proxy in ANT migration tool:</strong></span><br />
+If your organization uses the proxy then add below target in &#8220;build.xml&#8221; and specify this target as dependent.</p>
+<pre class="brush: xml; title: ; notranslate" title="">
+&lt;target name=&quot;proxy&quot;&gt;
+		&lt;property name=&quot;proxy.host&quot; value=&quot; ProxyURL &quot; /&gt;
+		&lt;property name=&quot;proxy.port&quot; value=&quot;1234&quot; /&gt;
+		&lt;property name=&quot;proxy.user&quot; value=&quot;UserName&quot; /&gt;
+		&lt;property name=&quot;proxy.pwd&quot; value=&quot;Password&quot; /&gt;
+		&lt;setproxy proxyhost=&quot;${proxy.host}&quot; proxyport=&quot;${proxy.port}&quot; proxyuser=&quot;${proxy.user}&quot; proxypassword=&quot;${proxy.pwd}&quot; /&gt;
+	&lt;/target&gt;
+</pre>
+<p><span style="text-decoration: underline;"><strong>Retrieve content from Salesforce Organization:</strong></span><br />
+create &#8220;package.xml&#8221; for the list of component to be retrieved and add following task in &#8220;build.xml&#8221;.</p>
+<pre class="brush: xml; title: ; notranslate" title="">
+&lt;!-- Retrieve an unpackaged set of metadata from your org --&gt;
+&lt;!-- The file unpackaged/package.xml lists what is to be retrieved --&gt;
+&lt;target name=&quot;test&quot; depends=&quot;proxy&quot;&gt;
+  &lt;mkdir dir=&quot;retrieveUnpackaged&quot;/&gt;
+  &lt;!-- Retrieve the contents into another directory --&gt;
+  &lt;sf:retrieve username=&quot;${sf.username}&quot; password=&quot;${sf.password}&quot; serverurl=&quot;${sf.serverurl}&quot; retrieveTarget=&quot;retrieveUnpackaged&quot; unpackaged=&quot;unpackaged/package.xml&quot; unzip=&quot;false&quot; /&gt;
+&lt;/target&gt;
+</pre>
+<p style="text-align: justify;">&#8220;Unzip&#8221; attribute specifies that the code retrieved should be in Zip format or not. By default the value is true means it will not in zip format.</p>
+<p style="text-align: justify;"><strong>Delete components from Salesforce Organization using &#8220;destructiveChanges.xml&#8221; :</strong><br />
+In some cases, we may want to delete some components like Object or fields from Salesforce Organization. In this case, Only &#8220;package.xml&#8221; will not work. We need to create &#8220;destructiveChanges.xml&#8221; file also. Syntax for this file is exactly same as of &#8220;package.xml&#8221;, except that here we cannot define wildcards. So, to undeploy anything from Salesforce org, we need two xml files &#8211; &#8220;package.xml&#8221; and &#8220;<span style="text-decoration: underline;">destructiveChanges.xml</span>&#8220;.</p>
+<p style="text-align: justify;">Below is complete code of build.xml, which includes retrieve, Undeploy and Deploy commands.</p>
+<pre class="brush: xml; title: ; notranslate" title="">
+&lt;project name=&quot;Shivasoft Demo Org&quot; default=&quot;deployCode&quot; basedir=&quot;.&quot; xmlns:sf=&quot;antlib:com.salesforce&quot;&gt;
+	&lt;!-- Get all settings like Server Path, username and passwords from &quot;build.properties&quot; file --&gt;
+    &lt;property file=&quot;build.properties&quot;/&gt;
+    &lt;property environment=&quot;env&quot;/&gt;
+	&lt;!-- Sequence 1 - Get All information from Source, Retrieve the contents into Src directory --&gt;
+	&lt;target name=&quot;SFDCFetch&quot;&gt;
+	  &lt;!-- --&gt;
+	  &lt;sf:retrieve username=&quot;${sf.username}&quot; password=&quot;${sf.password}&quot; serverurl=&quot;${sf.serverurl}&quot; retrieveTarget=&quot;src&quot; unpackaged=&quot;package.xml&quot;/&gt;
+	&lt;/target&gt;
+
+	&lt;!-- Sequence 3 - Deploy to Target System, Package.xml is present in Src folder --&gt;
+	&lt;target name=&quot;deploy&quot;&gt;
+      &lt;sf:deploy username=&quot;${sf1.username}&quot; password=&quot;${sf1.password}&quot; serverurl=&quot;${sf.serverurl}&quot; deployroot=&quot;Src&quot;&gt;
+      &lt;/sf:deploy&gt;
+    &lt;/target&gt; 
+
+	&lt;!-- Sequence 2 - If you want to remove some components, destructiveChanges.xml and Package.xml present in Delete Folder --&gt;
+	&lt;target name=&quot;unDeploy&quot;&gt;
+      &lt;sf:deploy username=&quot;${sf1.username}&quot; password=&quot;${sf1.password}&quot; serverurl=&quot;${sf.serverurl}&quot; deployroot=&quot;Delete&quot;&gt;
+      &lt;/sf:deploy&gt;
+    &lt;/target&gt;
+&lt;/project&gt;
+</pre>
+<p><a title="You may also be interested to check how to automate daily Salesforce organization backup" href="https://www.jitendrazaa.com/blog/salesforce/automated-daily-backup-using-ant-migration-tool-and-git/">You may also be interested to check how to automate daily Salesforce backup</a>.</p>
+<h3>How to Create Change set from Package.xml</h3>
+<p><strong>Step 1 :</strong> Create Empty Changeset, lets say its name is changeset2<br />
+<strong>Step 2 :</strong> add <strong>fullname</strong> tag in package.xml. Fullname needs to be the name of changeset created in Step 1</p>
+<pre class="brush: xml; highlight: [3]; title: ; notranslate" title="">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Package xmlns=&quot;http://soap.sforce.com/2006/04/metadata&quot;&gt;
+&lt;fullName&gt;Changeset2&lt;/fullName&gt;
+    &lt;types&gt;
+        &lt;members&gt;AdditionalQuestionTriggerHandler&lt;/members&gt;
+...
+...
+&lt;/package&gt;
+</pre>
+<p><strong>Step 3 :</strong> src folder name which contains package.xml needs to have changeset name, in our case changeset2</p>
+<h3>How to Create Package.xml from Change set</h3>
+<p>Use below ANT script</p>
+<pre class="brush: xml; highlight: [7]; title: ; notranslate" title="">
+&lt;target name=&quot;retrieveChangeset&quot;&gt;  
+  &lt;sf:retrieve 
+username=&quot;${sf.username}&quot; 
+password=&quot;${sf.password}&quot; 
+serverurl=&quot;${sf.serverurl}&quot; 
+retrieveTarget=&quot;changesetfolder&quot; 
+packageNames=&quot;changesetname&quot; /&gt; 
+&lt;/target&gt;
+</pre>
+<p>&nbsp;</p>
+<p>Update [03-Apr-2017]</p>
+<p style="text-align: justify;"><strong><span style="text-decoration: underline;">Question</span> : Why Salesforce ANT Migration tool is giving wrong Username, Security token or password error, even when everything is correct ?</strong><br />
+<strong>Ans :</strong> If your password contains &#8220;$&#8221;, then ANT tool ignores this characters. So, to correct this, we need to add one more &#8220;$&#8221;.</p>
+<p><strong>Question : I am getting unable to find tools.jar files error. I don&#8217;t have access to server so cannot place tools.jar manually. Can I fix this error using build.xml by placing jar files in relative folder?</strong></p>
+<p><strong>Ans :</strong> You can include any jar file to be in class path. Add below lines in build.xml. All jar files are placed in lib folder.</p>
+<pre class="brush: xml; title: ; notranslate" title="">
+&lt;path id=&quot;class.path&quot;&gt;
+&lt;pathelement location=&quot;${build}&quot;/&gt;
+&lt;fileset dir=&quot;./lib&quot;&gt;
+&lt;include name=&quot;**/*.jar&quot; /&gt;
+&lt;/fileset&gt;
+&lt;/path&gt;
+
+&lt;taskdef resource=&quot;com/salesforce/antlib.xml&quot; uri=&quot;antlib:com.salesforce&quot; classpathref=&quot;class.path&quot;/&gt;
+</pre>
+<p style="text-align: justify;"><strong>Question : Why I am getting error like java.lang.OutOfMemoryError: Java heap space while retrieving metadata from Salesforce. </strong></p>
+<p style="text-align: justify;">Ans : It is possible that you are retrieving metadata of some big organization with lots of changes. In this case, Java JVM running on system needs more memory (RAM) in order to process it. It can be done in two ways</p>
+<p>1. Before running ANT command, run below command which will set the RAM allocated for JVM to 1GB. If you are not a Windows user, then use export instead of set in below command.</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+set ANT_OPTS=-Xmx1g
+</pre>
+<p>2. Problem in above solution is that, you would need to execute set command every time before using ANT. For permanent solution, open <strong>ant.bat</strong> file in bin folder of ANT installation (Same installation folder referred in ANT_HOME). And, at very first line, write below command and save it.</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+set ANT_OPTS=-Xmx1g
+</pre>
+<p style="text-align: justify;">I hope this article will help newbie to learn ant migration tool.</p>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing"><h3 class="sd-title">Share this post</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon no-text" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?share=email" target="_blank" title="Click to email this to a friend"><span></span><span class="sharing-screen-reader-text">Click to email this to a friend (Opens in new window)</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-2892" class="share-twitter sd-button share-icon no-text" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?share=twitter" target="_blank" title="Click to share on Twitter"><span></span><span class="sharing-screen-reader-text">Click to share on Twitter (Opens in new window)</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-2892" class="share-facebook sd-button share-icon no-text" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?share=facebook" target="_blank" title="Click to share on Facebook"><span></span><span class="sharing-screen-reader-text">Click to share on Facebook (Opens in new window)</span></a></li><li class="share-google-plus-1"><a rel="nofollow noopener noreferrer" data-shared="sharing-google-2892" class="share-google-plus-1 sd-button share-icon no-text" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span></span><span class="sharing-screen-reader-text">Click to share on Google+ (Opens in new window)</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-2892" class="share-linkedin sd-button share-icon no-text" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span></span><span class="sharing-screen-reader-text">Click to share on LinkedIn (Opens in new window)</span></a></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-2892" class="share-pinterest sd-button share-icon no-text" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span></span><span class="sharing-screen-reader-text">Click to share on Pinterest (Opens in new window)</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon no-text" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?share=tumblr" target="_blank" title="Click to share on Tumblr"><span></span><span class="sharing-screen-reader-text">Click to share on Tumblr (Opens in new window)</span></a></li><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon no-text" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?share=reddit" target="_blank" title="Click to share on Reddit"><span></span><span class="sharing-screen-reader-text">Click to share on Reddit (Opens in new window)</span></a></li><li class="share-pocket"><a rel="nofollow noopener noreferrer" data-shared="" class="share-pocket sd-button share-icon no-text" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?share=pocket" target="_blank" title="Click to share on Pocket"><span></span><span class="sharing-screen-reader-text">Click to share on Pocket (Opens in new window)</span></a></li><li class="share-end"></li></ul></div></div></div>
+	</div><!-- .entry-content -->
+ 
+	<footer class="entry-footer" style="display:none;">
+		<span class="byline"><span class="author vcard"><img alt='' src='https://secure.gravatar.com/avatar/30e112f7dd512c86ac3e25f10d669bd0?s=49&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/30e112f7dd512c86ac3e25f10d669bd0?s=98&#038;d=mm&#038;r=g 2x' class='avatar avatar-49 photo' height='49' width='49' /><span class="screen-reader-text">Author </span> <a class="url fn n" href="https://www.jitendrazaa.com/blog/author/admin/">Jitendra</a></span></span><span class="posted-on"><span class="screen-reader-text">Posted on </span><a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/" rel="bookmark"><time class="entry-date published" datetime="2012-06-05T18:51:15+00:00">June 5, 2012</time><time class="updated" datetime="2018-11-09T16:49:55+00:00">November 9, 2018</time></a></span><span class="cat-links"><span class="screen-reader-text">Categories </span><a href="https://www.jitendrazaa.com/blog/category/salesforce/configuration/" rel="category tag">Configuration</a>, <a href="https://www.jitendrazaa.com/blog/category/salesforce/" rel="category tag">Salesforce</a></span><span class="tags-links"><span class="screen-reader-text">Tags </span><a href="https://www.jitendrazaa.com/blog/tag/ant/" rel="tag">ANT</a>, <a href="https://www.jitendrazaa.com/blog/tag/ant-migration-tool/" rel="tag">ANT Migration Tool</a>, <a href="https://www.jitendrazaa.com/blog/tag/changeset/" rel="tag">changeset</a>, <a href="https://www.jitendrazaa.com/blog/tag/deployment/" rel="tag">Deployment</a>, <a href="https://www.jitendrazaa.com/blog/tag/eclipse/" rel="tag">Eclipse</a>, <a href="https://www.jitendrazaa.com/blog/tag/java/" rel="tag">JAVA</a>, <a href="https://www.jitendrazaa.com/blog/tag/salesforce/" rel="tag">Salesforce</a>, <a href="https://www.jitendrazaa.com/blog/tag/salesforce-migration/" rel="tag">Salesforce Migration</a></span>		 
+
+	</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+
+<div class="entry-content">
+<h3>Related posts</h3>	
+	<ul>		 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/salesforce/use-metadata-api-with-salesforce-dx/"> Use Metadata API with Salesforce DX </a> </li> 
+				 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/salesforce/how-to-retrieve-and-deploy-custom-metadata-types-using-ant/"> How to Retrieve and Deploy Custom Metadata Types using ANT </a> </li> 
+				 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/salesforce/salesforce-spring-17-release-my-favorite-features/"> Salesforce Spring 17 release &#8211; My favorite features </a> </li> 
+				 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/salesforce/dynamically-remove-xml-content-from-metadata-before-salesforce-deployment-using-xmltask-video/"> Dynamically remove XML content from metadata before Salesforce deployment using xmlTask &#8211; Video </a> </li> 
+				 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/salesforce/delete-components-using-ant-migration-tool-video/"> Delete Components using Ant Migration tool &#8211; Video </a> </li> 
+				 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/java/creating-custom-ant-plugin-or-task-in-java/"> Creating custom ANT plugin or Task in Java </a> </li> 
+				 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/salesforce/become-expert-in-formulas-salesforce-video-newsletter-july-2015/"> Become expert in formulas  &#8211; Salesforce Video Newsletter &#8211; July 2015 </a> </li> 
+				 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/salesforce/most-frequently-used-code-snippets-for-salesforce-developers-faq-part-21/"> Salesforce Developers interview questions &#8211; Most commonly used code snippets &#8211; part 21 </a> </li> 
+				 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/salesforce/advance-apex-debugging-in-salesforce-and-best-practices-videos/"> Advance Apex debugging in Salesforce and best practices &#8211; Videos </a> </li> 
+				 <li> <a rel="external" href="https://www.jitendrazaa.com/blog/salesforce/continuous-integration-in-salesforce-using-flosum-appexchange/"> Continuous Integration in Salesforce using Flosum AppExchange </a> </li> 
+		</ul> </div> 
+<!-- End -->
+
+
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://www.jitendrazaa.com/blog/others/sap/sap-r3-security-interview-questions/" rel="prev"><span class="meta-nav" aria-hidden="true">Previous</span> <span class="screen-reader-text">Previous post:</span> <span class="post-title">SAP R/3 Security &#8211; Interview Questions</span></a></div><div class="nav-next"><a href="https://www.jitendrazaa.com/blog/others/sap/s_tabu_nam-an-advanced-authorization-object-for-generic-table-access/" rel="next"><span class="meta-nav" aria-hidden="true">Next</span> <span class="screen-reader-text">Next post:</span> <span class="post-title">S_TABU_NAM: An advanced authorization object for generic table access</span></a></div></div>
+	</nav>
+<div id="comments" class="comments-area">
+
+			<h2 class="comments-title">
+			31 thoughts on &ldquo;Complete Salesforce Deployment Guide using Ant Migration Tool&rdquo;		</h2>
+
+		
+		<ol class="comment-list">
+					<li id="comment-1245" class="comment even thread-even depth-1">
+			<article id="div-comment-1245" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/621e3f1e6299056590b3d8241fd5ca0c?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/621e3f1e6299056590b3d8241fd5ca0c?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Sunu</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1245">
+							<time datetime="2012-06-13T09:57:00+00:00">
+								June 13, 2012 at 9:57 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thank you very much for the post</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1245#respond' onclick='return addComment.moveForm( "div-comment-1245", "1245", "respond", "2892" )' aria-label='Reply to Sunu'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1246" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-1246" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/36e0a6637cb0d10bc86c8e3f5aac3367?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/36e0a6637cb0d10bc86c8e3f5aac3367?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Vinay</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1246">
+							<time datetime="2012-08-31T02:52:00+00:00">
+								August 31, 2012 at 2:52 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks a lot, very informative.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1246#respond' onclick='return addComment.moveForm( "div-comment-1246", "1246", "respond", "2892" )' aria-label='Reply to Vinay'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1247" class="comment even thread-even depth-1">
+			<article id="div-comment-1247" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/1f95c8c96064f64e6ca6b9c6a28a781a?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/1f95c8c96064f64e6ca6b9c6a28a781a?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">sra</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1247">
+							<time datetime="2012-10-31T00:05:00+00:00">
+								October 31, 2012 at 12:05 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Very good thanks shiva</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1247#respond' onclick='return addComment.moveForm( "div-comment-1247", "1247", "respond", "2892" )' aria-label='Reply to sra'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1248" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-1248" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo avatar-default' height='42' width='42' />						<b class="fn"><a href='http://www.facebook.com/aries.mishra' rel='external nofollow' class='url'>Nitish Mishra</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1248">
+							<time datetime="2012-11-07T13:16:00+00:00">
+								November 7, 2012 at 1:16 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>How can I deploy a folder using ant tool:</p>
+<p>when I used the below codes to deploy the folder :</p>
+<p>        EMEA_Pricing_Approval_Templates<br />
+Folder</p>
+<p>It gives the error:<br />
+Retrive Commands ::</p>
+<p>F:AntDemosample&gt;ant retrieveUnpackaged<br />
+Buildfile: F:AntDemosamplebuild.xml<br />
+retrieveUnpackaged:<br />
+[sf:retrieve] Request for a retrieve submitted successfully.<br />
+[sf:retrieve] Request Id for the current retrieve task: 04s900000025E2EAAU<br />
+[sf:retrieve] Waiting for server to finish processing the request&#8230;<br />
+[sf:retrieve] Request Status: Completed<br />
+[sf:retrieve] Retrieve warnings (1):<br />
+[sf:retrieve] package.xml &#8211; Entity type: &#8216;Folder&#8217; is unknown<br />
+[sf:retrieve] Finished request 04s900000025E2EAAU successfully.</p>
+<p>Deploy command::</p>
+<p>F:AntDemosample&gt;ant deployUnpackaged<br />
+Buildfile: F:AntDemosamplebuild.xml<br />
+deployUnpackaged:<br />
+[sf:deploy] Request for a deploy submitted successfully.<br />
+[sf:deploy] Request Id for the current deploy task: 04s90000002BZDxAAO<br />
+[sf:deploy] Waiting for server to finish processing the request&#8230;<br />
+[sf:deploy] Request Status: Completed<br />
+BUILD FAILED<br />
+F:AntDemosamplebuild.xml:37: FAILURES:<br />
+Error: package.xml():Unknown type name &#8216;Folder&#8217; specified in package.xml<br />
+Total time: 16 seconds</p>
+<p>Any help will be appreciated..:)</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1248#respond' onclick='return addComment.moveForm( "div-comment-1248", "1248", "respond", "2892" )' aria-label='Reply to Nitish Mishra'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1249" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-1249" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0d04831b2a2c6342a71e00381a34d5d3?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/0d04831b2a2c6342a71e00381a34d5d3?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Dedo</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1249">
+							<time datetime="2013-05-09T14:22:00+00:00">
+								May 9, 2013 at 2:22 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Nice tutorial 🙂 can I run ANT to retrieve and deploy from/to salesforce from Eclipse?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1249#respond' onclick='return addComment.moveForm( "div-comment-1249", "1249", "respond", "2892" )' aria-label='Reply to Dedo'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-1250" class="comment odd alt depth-2">
+			<article id="div-comment-1250" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/30e112f7dd512c86ac3e25f10d669bd0?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/30e112f7dd512c86ac3e25f10d669bd0?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">JitendraZaa</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1250">
+							<time datetime="2013-05-09T15:04:00+00:00">
+								May 9, 2013 at 3:04 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Eclipse already have inbuilt Migration tool.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1250#respond' onclick='return addComment.moveForm( "div-comment-1250", "1250", "respond", "2892" )' aria-label='Reply to JitendraZaa'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-1251" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-1251" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/60ee7ff7913979e3e1415298b06adcb8?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/60ee7ff7913979e3e1415298b06adcb8?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">planecrash</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1251">
+							<time datetime="2013-07-08T20:45:00+00:00">
+								July 8, 2013 at 8:45 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>How do I do a site to site copy?  I get errors if I select every object in the eclipse dialog.  For instance case assignments object for users in one site and not another?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1251#respond' onclick='return addComment.moveForm( "div-comment-1251", "1251", "respond", "2892" )' aria-label='Reply to planecrash'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-1252" class="comment odd alt depth-2 parent">
+			<article id="div-comment-1252" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/60ee7ff7913979e3e1415298b06adcb8?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/60ee7ff7913979e3e1415298b06adcb8?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">planecrash</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1252">
+							<time datetime="2013-07-10T20:43:00+00:00">
+								July 10, 2013 at 8:43 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Eventually figured it all out, was a pain in the butt!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1252#respond' onclick='return addComment.moveForm( "div-comment-1252", "1252", "respond", "2892" )' aria-label='Reply to planecrash'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-1253" class="comment even depth-3 parent">
+			<article id="div-comment-1253" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/30e112f7dd512c86ac3e25f10d669bd0?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/30e112f7dd512c86ac3e25f10d669bd0?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">JitendraZaa</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1253">
+							<time datetime="2013-07-11T00:59:00+00:00">
+								July 11, 2013 at 12:59 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I just checked ur comment.. What was wrong at ur side ? If u can suggest i will update this article. Your feedback is appreciated</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1253#respond' onclick='return addComment.moveForm( "div-comment-1253", "1253", "respond", "2892" )' aria-label='Reply to JitendraZaa'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-1254" class="comment odd alt depth-4">
+			<article id="div-comment-1254" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/60ee7ff7913979e3e1415298b06adcb8?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/60ee7ff7913979e3e1415298b06adcb8?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">planecrash</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1254">
+							<time datetime="2013-07-25T00:03:00+00:00">
+								July 25, 2013 at 12:03 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Well basically I was given access to a development instance a consultant had coded.  My level of experience was low, and it was difficult determining which metadata components to select, without any input from the people who wrote it, to completely move the custom app from one instance of salesforce to another.  I have since identified the list of metadata components required in the migration and have continuous integration up and running with ant, the migration tool, Git, and JetBrains&#8217; TeamCity.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1254#respond' onclick='return addComment.moveForm( "div-comment-1254", "1254", "respond", "2892" )' aria-label='Reply to planecrash'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-1255" class="comment even thread-even depth-1">
+			<article id="div-comment-1255" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/076a2c1689edc9b9b77cf30cbdf90314?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/076a2c1689edc9b9b77cf30cbdf90314?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Salesforce user</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1255">
+							<time datetime="2013-08-27T02:55:00+00:00">
+								August 27, 2013 at 2:55 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks, it helped me in setting up proxy in build.xml</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1255#respond' onclick='return addComment.moveForm( "div-comment-1255", "1255", "respond", "2892" )' aria-label='Reply to Salesforce user'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1256" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-1256" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/dab4e6abb4cc1f41f1c0556834a5f120?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/dab4e6abb4cc1f41f1c0556834a5f120?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Ta</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-1256">
+							<time datetime="2014-01-27T14:59:00+00:00">
+								January 27, 2014 at 2:59 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi I want to read a xml file form my local machine and update the account object with the xml data using ANT&#8230;please suggest me how should I achieve it.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=1256#respond' onclick='return addComment.moveForm( "div-comment-1256", "1256", "respond", "2892" )' aria-label='Reply to Ta'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-3376" class="comment even thread-even depth-1">
+			<article id="div-comment-3376" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/cce3b3995e7e06b1825ec1bc1c8acbeb?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/cce3b3995e7e06b1825ec1bc1c8acbeb?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">saravanan</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3376">
+							<time datetime="2014-09-18T06:52:00+00:00">
+								September 18, 2014 at 6:52 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,</p>
+<p>I have tried to retrieve the metadata from my<br />
+developer org for practicing. But I am always getting &#8211; Invalid Api<br />
+version specified on URL. I have posted this in developer forum but I<br />
+didn&#8217;t get any reply .Could u pls help me on this. For more details<br />
+about the error click the below link</p>
+<p><a href="https://developer.salesforce.com/forums/ForumsMain?id=906F0000000AiyTIAS" rel="nofollow">https://developer.salesforce.com/forums/ForumsMain?id=906F0000000AiyTIAS</a></p>
+<p>Thanks,</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3376#respond' onclick='return addComment.moveForm( "div-comment-3376", "3376", "respond", "2892" )' aria-label='Reply to saravanan'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-2386" class="pingback odd alt thread-odd thread-alt depth-1">
+			<div class="comment-body">
+				Pingback: <a href='http://dluat.com/ant-migration-tool-failed-to-send-request/' rel='external nofollow' class='url'>Ant migration tool&#8211;FAILED TO SEND REQUEST | DL-UAT</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-2597" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-2597" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/927e357bf6a0e9b7c1f38c58ba6de798?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/927e357bf6a0e9b7c1f38c58ba6de798?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Hardik Chavda</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-2597">
+							<time datetime="2015-07-04T07:15:00+00:00">
+								July 4, 2015 at 7:15 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Sir, I read your post. I have to say excellent job. I have one doubt though. If we can migrate everything using eclipse then why do we need ANT migration tool, In short my question is, What is it in ANT that makes it different from eclipse migration process? And what are the components that we can migrate using ANT but not using Eclipse.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=2597#respond' onclick='return addComment.moveForm( "div-comment-2597", "2597", "respond", "2892" )' aria-label='Reply to Hardik Chavda'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-2601" class="comment odd alt depth-2">
+			<article id="div-comment-2601" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/66f795f030fcc5290902fd41eb7386fe?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/66f795f030fcc5290902fd41eb7386fe?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn"><a href='https://jitendrazaa.com/' rel='external nofollow' class='url'>Jitendra Zaa</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-2601">
+							<time datetime="2015-07-06T18:26:00+00:00">
+								July 6, 2015 at 6:26 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Hardik, There are many differences but most importany for me is ability to schedule migration in ANT which is not possible in Eclipse. Both supports almost same feature but Eclipse is more use friendly. If you are talking about Continiuse integration then go for ANT. There is very good article written by &#8220;James Loghry&#8221; at <a href="http://blog.edlconsulting.com/salesforce-com/force-com-deployments-a-comparison-of-the-tools-available-for-developers-and-admins/" rel="nofollow">http://blog.edlconsulting.com/salesforce-com/force-com-deployments-a-comparison-of-the-tools-available-for-developers-and-admins/</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=2601#respond' onclick='return addComment.moveForm( "div-comment-2601", "2601", "respond", "2892" )' aria-label='Reply to Jitendra Zaa'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-2930" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-2930" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/418d721ab7aa895244caf1700ce4a311?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/418d721ab7aa895244caf1700ce4a311?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Skender Kollcaku</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-2930">
+							<time datetime="2016-01-08T16:03:00+00:00">
+								January 8, 2016 at 4:03 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,</p>
+<p>First of all thanks for this guide.<br />
+I get the following error and sincerely do not fully understand what is the deployRoot:</p>
+<p>./ant deployPlivoCheckOnly<br />
+Buildfile: C:Antapache-ant-1.9.6-binapache-ant-1.9.6binbuild.xml<br />
+deployPlivoCheckOnly:</p>
+<p>     [echo] Run &#8216;ant deployPlivo&#8217; to deploy this library to your organization.<br />
+     [echo] Testing deployment of Plivo Helper Library for Salesforce without saving changes&#8230;<br />
+BUILD FAILED<br />
+C:Antapache-ant-1.9.6-binapache-ant-1.9.6binbuild.xml:22: Should provide a valid directory &#8216;deployRoot&#8217; or a zip file &#8216;zipFile&#8217;.</p>
+<p>Any suggestion?</p>
+<p>Thanks,<br />
+Skender</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=2930#respond' onclick='return addComment.moveForm( "div-comment-2930", "2930", "respond", "2892" )' aria-label='Reply to Skender Kollcaku'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-2931" class="comment odd alt depth-2 parent">
+			<article id="div-comment-2931" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/66f795f030fcc5290902fd41eb7386fe?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/66f795f030fcc5290902fd41eb7386fe?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn"><a href='https://jitendrazaa.com/' rel='external nofollow' class='url'>Jitendra Zaa</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-2931">
+							<time datetime="2016-01-08T18:49:00+00:00">
+								January 8, 2016 at 6:49 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Not very sure but seems you have created build.xml in bin folder of ANT itself. I would suggest, remove ANT and fresh install. Set Class path for ANT bin folder and set ANT_HOME environment variable. create isolated folder for your project and run ANT from there.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=2931#respond' onclick='return addComment.moveForm( "div-comment-2931", "2931", "respond", "2892" )' aria-label='Reply to Jitendra Zaa'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-2959" class="comment even depth-3">
+			<article id="div-comment-2959" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/418d721ab7aa895244caf1700ce4a311?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/418d721ab7aa895244caf1700ce4a311?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Skender Kollcaku</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-2959">
+							<time datetime="2016-01-19T10:41:00+00:00">
+								January 19, 2016 at 10:41 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, You are right.</p>
+<p>I did it from the start and now it should be all fine:</p>
+<p>C:Plivoplivo-salesforce-masterinstall&gt;ant deployPlivo</p>
+<p>Buildfile: C:Plivoplivo-salesforce-masterinstallbuild.xml</p>
+<p>deployPlivo:</p>
+<p>     [echo] Deploying Plivo Helper Library for Salesforce&#8230;<br />
+[sf:deploy] Request for a deploy submitted successfully.<br />
+[sf:deploy] Request ID for the current deploy task: 0Af58000002UomDCAS<br />
+[sf:deploy] Waiting for server to finish processing the request&#8230;<br />
+[sf:deploy] Request Status: InProgress<br />
+[sf:deploy] Request Status: Succeeded<br />
+[sf:deploy] *********** DEPLOYMENT SUCCEEDED ***********<br />
+[sf:deploy] Finished request 0Af58000002UomDCAS successfully.</p>
+<p>BUILD SUCCESSFUL</p>
+<p>Total time: 15 seconds</p>
+<p>Now my question is: what is the next step in the integration process?<br />
+How do I see a sample Demo Plivo app in my Salesforce instance?</p>
+<p>Thanks again,<br />
+Skender</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=2959#respond' onclick='return addComment.moveForm( "div-comment-2959", "2959", "respond", "2892" )' aria-label='Reply to Skender Kollcaku'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-3287" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-3287" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/fa133d3e18d472f39954dbcc6e32ff29?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/fa133d3e18d472f39954dbcc6e32ff29?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Harihar Tiple</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3287">
+							<time datetime="2016-07-21T14:05:00+00:00">
+								July 21, 2016 at 2:05 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>HI, <a href="http://blog.edlconsulting.com/salesforce-com/force-com-deployments-a-comparison-of-the-tools-available-for-developers-and-admins/" rel="nofollow">http://blog.edlconsulting.com/salesforce-com/force-com-deployments-a-comparison-of-the-tools-available-for-developers-and-admins/</a> not working any more</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3287#respond' onclick='return addComment.moveForm( "div-comment-3287", "3287", "respond", "2892" )' aria-label='Reply to Harihar Tiple'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-3425" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-3425" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/e5fcdbcec3e8e9fc653c861f2c923eed?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/e5fcdbcec3e8e9fc653c861f2c923eed?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Sivanathan Palanivel</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3425">
+							<time datetime="2016-08-30T23:12:00+00:00">
+								August 30, 2016 at 11:12 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hello Jitendra,</p>
+<p>I am facing an issue which I think you might help me with. I am receiving the below error with my TFS &#8211; Salesforce migration tool continuous build integration process. It was working fine until I upgraded the JRE version to 1.8. The JDK is 1.6. I have verified the ANT_HOME and JAVA_HOME parameters, its all looks fine to me. This issue only happens when I queue a new build from TFS. The whole setup is in one of the file servers and the local build(on the server) runs fine with no errors. What do you think I am missing in this case?</p>
+<p>Ant failed. Error output:<br />
+ Ant failed. Error output: BUILD FAILED<br />
+ Ant failed. Error output: java.lang.UnsupportedClassVersionError: com/sforce/ws/ConnectionException : Unsupported major.minor version 51.0<br />
+ Ant failed. Error output: ○at java.lang.ClassLoader.defineClass1(Native Method)<br />
+ Ant failed. Error output: ○at java.lang.ClassLoader.defineClassCond(ClassLoader.java:632)<br />
+ Ant failed. Error output: ○at java.lang.ClassLoader.defineClass(ClassLoader.java:616)</p>
+<p>Thanks<br />
+Siva</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3425#respond' onclick='return addComment.moveForm( "div-comment-3425", "3425", "respond", "2892" )' aria-label='Reply to Sivanathan Palanivel'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-3426" class="comment odd alt depth-2">
+			<article id="div-comment-3426" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/66f795f030fcc5290902fd41eb7386fe?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/66f795f030fcc5290902fd41eb7386fe?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn"><a href='https://jitendrazaa.com/' rel='external nofollow' class='url'>Jitendra Zaa</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3426">
+							<time datetime="2016-08-30T23:15:00+00:00">
+								August 30, 2016 at 11:15 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>You need JRE 7 installed on system. Class version 51 from error needs updated JRE. check this for more info &#8211; <a href="http://stackoverflow.com/questions/10382929/how-to-fix-java-lang-unsupportedclassversionerror-unsupported-major-minor-versi" rel="nofollow">http://stackoverflow.com/questions/10382929/how-to-fix-java-lang-unsupportedclassversionerror-unsupported-major-minor-versi</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3426#respond' onclick='return addComment.moveForm( "div-comment-3426", "3426", "respond", "2892" )' aria-label='Reply to Jitendra Zaa'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-3467" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-3467" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/fb02314884dcb90724510cae12381bb4?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/fb02314884dcb90724510cae12381bb4?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Kamal Sharma</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3467">
+							<time datetime="2016-10-19T08:40:00+00:00">
+								October 19, 2016 at 8:40 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,<br />
+When i execute command  &gt; ant retrieveCode. I got an error message</p>
+<p>Buildfile: C:UsersBispDesktopTest1build.xml</p>
+<p>retrieveCode:<br />
+    [mkdir] Created dir: C:UsersBispDesktopTest1retrieveUnpackaged<br />
+[sf:retrieve] Note: use ant -verbose to get more information on the failure</p>
+<p>BUILD FAILED<br />
+C:UsersBispDesktopTest1build.xml:7: Failed to login: Failed to send request  to <a href="https://$" rel="nofollow">https://$</a>{sf.serverurl}/services/Soap/u/38.0</p>
+<p>I am not using any proxy network still i build failed. </p>
+<p>Can you help me with this?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3467#respond' onclick='return addComment.moveForm( "div-comment-3467", "3467", "respond", "2892" )' aria-label='Reply to Kamal Sharma'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-3468" class="comment odd alt depth-2 parent">
+			<article id="div-comment-3468" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/66f795f030fcc5290902fd41eb7386fe?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/66f795f030fcc5290902fd41eb7386fe?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn"><a href='https://jitendrazaa.com/' rel='external nofollow' class='url'>Jitendra Zaa</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3468">
+							<time datetime="2016-10-19T12:15:00+00:00">
+								October 19, 2016 at 12:15 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>IN build.properties file, make sure sf.serverurl is defined.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3468#respond' onclick='return addComment.moveForm( "div-comment-3468", "3468", "respond", "2892" )' aria-label='Reply to Jitendra Zaa'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-3469" class="comment even depth-3 parent">
+			<article id="div-comment-3469" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/fb02314884dcb90724510cae12381bb4?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/fb02314884dcb90724510cae12381bb4?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Kamal Sharma</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3469">
+							<time datetime="2016-10-20T10:28:00+00:00">
+								October 20, 2016 at 10:28 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Jitendra Thanks for response. I already defined in build.properties Sharing code to you .</p>
+<p># build.properties</p>
+<p># Specify the login credentials for the desired Salesforce organization<br />
+sf.username =<i><br />
+sf.password =<br />
+sf.serverurl = <a href="https://login.salesforce.com" rel="nofollow">https://login.salesforce.com</a><br />
+sf.maxPoll =20</i></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3469#respond' onclick='return addComment.moveForm( "div-comment-3469", "3469", "respond", "2892" )' aria-label='Reply to Kamal Sharma'>Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-3627" class="comment odd alt depth-4">
+			<article id="div-comment-3627" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0dcd4982fd908cef8ec9ad2a70a4ad96?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/0dcd4982fd908cef8ec9ad2a70a4ad96?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">James24</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3627">
+							<time datetime="2017-04-17T14:47:00+00:00">
+								April 17, 2017 at 2:47 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I am also getting the same error. I check the URL it&#8217;s good. I gave the proxy setting as mentioned in this blog. is this something do with the firewall?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3627#respond' onclick='return addComment.moveForm( "div-comment-3627", "3627", "respond", "2892" )' aria-label='Reply to James24'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-3471" class="comment even depth-3">
+			<article id="div-comment-3471" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0ec7549ae7de6f4f52789254ef5bbed6?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/0ec7549ae7de6f4f52789254ef5bbed6?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Manoj Behera</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3471">
+							<time datetime="2016-10-21T13:26:00+00:00">
+								October 21, 2016 at 1:26 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Jitendra,</p>
+<p>Can you please share with me your email Id please&#8230;I need a help from you please.</p>
+<p>my email Id: <a href="mailto:sfdctechie16@gmail.com">sfdctechie16@gmail.com</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3471#respond' onclick='return addComment.moveForm( "div-comment-3471", "3471", "respond", "2892" )' aria-label='Reply to Manoj Behera'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-3472" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-3472" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0ec7549ae7de6f4f52789254ef5bbed6?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/0ec7549ae7de6f4f52789254ef5bbed6?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Manoj Behera</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3472">
+							<time datetime="2016-10-21T14:13:00+00:00">
+								October 21, 2016 at 2:13 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Jitendra,</p>
+<p>Your help is much appreciated&#8230;I have gone through some of the blogs including your one, I could not be able to resolve this issue. My code is as:</p>
+<p>@Future(callout=true)<br />
+public static void execute(Set invoiceIds, String sid) {<br />
+JSONGenerator gen = JSON.createGenerator(true);<br />
+gen.writeStartObject();<br />
+gen.writeObjectField(&#8216;invoiceIds&#8217;, invoiceIds);<br />
+gen.writeEndObject();<br />
+String requestBody = gen.getAsString();<br />
+HttpRequest req = new HttpRequest();<br />
+String remoteSite = System.URL.getSalesforceBaseURL().getHost();<br />
+req.setEndpoint(&#8216;https://&#8217; + remoteSite.toLowerCase()+&#8217;/services/apexrest/QUAN/Invoice/XmlWriter&#8217;);<br />
+req.setMethod(&#8216;POST&#8217;);<br />
+req.setTimeout(120000);<br />
+req.setBody(requestBody);<br />
+String authorizationHeader = &#8216;Bearer &#8216; + sid;<br />
+system.debug(authorizationHeader);<br />
+req.setHeader(&#8216;Authorization&#8217;, authorizationHeader);<br />
+req.setHeader(&#8216;Content-Type&#8217;, &#8216;application/json&#8217;);<br />
+Http http = new Http();<br />
+HTTPResponse res;<br />
+try {<br />
+res = http.send(req);<br />
+System.debug(res.getBody());<br />
+} catch (Exception e) {<br />
+String msg = &#8216;Invoice submitted but XML data was not created successfully. Invoice records affected: &#8216;+invoiceIds;<br />
+Strategy_Settings_QUAN__c settings = Strategy_Settings_QUAN__c.getInstance();<br />
+String emailAddress = (String)settings.get(&#8216;SAP_Support_Email_QUAN__c&#8217;);<br />
+if(String.isBlank(emailAddress)) {<br />
+emailAddress = &#8216;strategy_support_noreply@gmail.com&#8217;;<br />
+}<br />
+Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();<br />
+List toAddresses = new List{emailAddress};<br />
+mail.setToAddresses(toAddresses);<br />
+mail.setSubject(&#8216;SAP Invoice error&#8217;);<br />
+mail.setHtmlBody(msg+ &#8216;Errors:&#8217;+e);<br />
+mail.setPlainTextBody(msg+ &#8216;nnErrors:nn&#8217;+e);<br />
+Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });<br />
+//log exception in error log<br />
+QUAN_Util.insertErrorLog(e);<br />
+}<br />
+}</p>
+<p>@Future(callout=true)<br />
+public static void writeXml(List invoiceIds) {<br />
+// RestRequest req = RestContext.request;<br />
+// RestResponse res = RestContext.response;<br />
+String filePrefix = &#8221;;<br />
+Strategy_Settings_QUAN__c settings = Strategy_Settings_QUAN__c.getOrgDefaults();<br />
+if (settings.Id != null &amp;&amp; settings.Invoice_File_Prefix_QUAN__c != null) filePrefix = settings.Invoice_File_Prefix_QUAN__c;<br />
+Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = &#8216;Invoice_QUAN&#8217; And SobjectType = &#8216;ContentVersion&#8217;].Id;<br />
+Id workspaceId = [SELECT Id FROM ContentWorkspace WHERE Name = &#8216;Strategy&#8217; Limit 1].Id;<br />
+List existingPDFs = [SELECT Id, FirstPublishLocationId, Invoice_QUAN__c FROM ContentVersion WHERE FileType = &#8216;PDF&#8217;<br />
+                                                AND Invoice_QUAN__c IN :invoiceIds];<br />
+Map invoiceIDToContentWorkspaceIDMap = new Map();<br />
+for(ContentVersion existingPDF : existingPDFs){<br />
+if(existingPDF.Invoice_QUAN__c != null &amp;&amp; existingPDF.FirstPublishLocationId != null){<br />
+invoiceIDToContentWorkspaceIDMap.put(existingPDF.Invoice_QUAN__c, existingPDF.FirstPublishLocationId);<br />
+}<br />
+}<br />
+List xmlFiles = new List();<br />
+for (String invoiceId : invoiceIds) {<br />
+PageReference xmlFile = Page.QUAN_InvoiceAFIXML;<br />
+xmlFile.getParameters().put(&#8216;id&#8217;, invoiceId);</p>
+<p>////Exception throws from the below line.<br />
+Blob b = (!Test.isRunningTest()) ? xmlFile.getContent() : Blob.valueOf(&#8216;MyText&#8217;);<br />
+//Blob b = xmlFile.getContent();</p>
+<p>ContentVersion invoiceXml = new ContentVersion();<br />
+invoiceXml.Title = filePrefix+invoiceId+&#8217;.xml&#8217;;<br />
+invoiceXml.PathOnClient = filePrefix+invoiceId+&#8217;.xml&#8217;;<br />
+if(invoiceIDToContentWorkspaceIDMap.containsKey(invoiceId)){<br />
+invoiceXml.FirstPublishLocationId = invoiceIDToContentWorkspaceIDMap.get(invoiceId);<br />
+} else {<br />
+invoiceXml.FirstPublishLocationId = workspaceId;<br />
+}<br />
+invoiceXml.Document_Type_QUAN__c = settings.QUAN_Invoice_XML_Writer_Document_Type__c;<br />
+invoiceXml.RecordTypeId = recordTypeId;<br />
+invoiceXml.Invoice_QUAN__c = invoiceId;<br />
+invoiceXml.VersionData = b;<br />
+xmlFiles.add(invoiceXml);<br />
+}<br />
+insert xmlFiles;</p>
+<p>        //delete any other xml-related documents on this invoice<br />
+Set contentDocumentIds = new Set();<br />
+for (ContentVersion cv : [SELECT ContentDocumentId From ContentVersion WHERE Invoice_QUAN__c in :invoiceIds AND Title like &#8216;%.xml%&#8217; AND Id not in :xmlFiles])<br />
+contentDocumentIds.add(cv.ContentDocumentId);<br />
+try {<br />
+delete [SELECT ID FROM ContentDocument WHERE Id in :contentDocumentIds];<br />
+} catch (Exception e) {<br />
+System.debug(&#8216;nnnMERC_InvoiceXmlWriter &#8211; &#8216;+e.getMessage()+&#8217;nnnn&#8217;);<br />
+//log exception in error log<br />
+QUAN_Util.insertErrorLog(e);<br />
+}<br />
+}</p>
+<p>I am getting &#8220;14:05:48.0 (85235474)|EXCEPTION_THROWN|[126]|System.CalloutException: Callout loop not allowed&#8221; exception. I have mentioned the line number in the second method written by &#8220;////Exception throws from the below line.&#8221;.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3472#respond' onclick='return addComment.moveForm( "div-comment-3472", "3472", "respond", "2892" )' aria-label='Reply to Manoj Behera'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-3781" class="comment even thread-even depth-1">
+			<article id="div-comment-3781" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/7f729517a2979742e83ca2153df02a51?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/7f729517a2979742e83ca2153df02a51?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Aneesh</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-3781">
+							<time datetime="2017-08-17T19:00:00+00:00">
+								August 17, 2017 at 7:00 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hey Jitendra,<br />
+I went through the post and it&#8217;s very informative. However, I had a unique requirement or rather interesting requirement with regard to the sales force deployment using ANT+ IntelliJ IDEA. I would want to discuss about it with you. How can I get in touch with you?<br />
+since this post is quite old, I am. It sure if it&#8217;s still active. I hope you see my comment.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=3781#respond' onclick='return addComment.moveForm( "div-comment-3781", "3781", "respond", "2892" )' aria-label='Reply to Aneesh'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-4358" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-4358" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/b9e7c497542c23ec7a0922e9fb573a19?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/b9e7c497542c23ec7a0922e9fb573a19?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">Vidya Ramachandran</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-4358">
+							<time datetime="2018-04-20T15:53:08+00:00">
+								April 20, 2018 at 3:53 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I am unable to install ANT sucessfully. It prompts ANT is not recognized as internal or external command. How do I fix it.﻿ Please help.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=4358#respond' onclick='return addComment.moveForm( "div-comment-4358", "4358", "respond", "2892" )' aria-label='Reply to Vidya Ramachandran'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-4733" class="comment even thread-even depth-1">
+			<article id="div-comment-4733" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/d14b238a0e81b503988f7f40feb7cdef?s=42&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/d14b238a0e81b503988f7f40feb7cdef?s=84&#038;d=mm&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' />						<b class="fn">GK</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/#comment-4733">
+							<time datetime="2018-09-24T02:52:39+00:00">
+								September 24, 2018 at 2:52 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Jitendra,<br />
+I am using TFS for CI and CD. How can I get the recent validation id from the previous task. I want to pick it and use in next task using PS script<br />
+My first step in TFS is deploy: checkonly=true<br />
+after above task I want to use deployRecentValidation:. So in this I need to mention recentvalidationid manually in properties file. But I am trying to get the value in TFS variable after the first step. So that I can use it in 2 step.<br />
+Any answer for this?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/?replytocom=4733#respond' onclick='return addComment.moveForm( "div-comment-4733", "4733", "respond", "2892" )' aria-label='Reply to GK'>Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+	
+		<div id="respond" class="comment-respond">
+							<h3 id="reply-title" class="comment-reply-title">Leave a Reply					<small><a rel="nofollow" id="cancel-comment-reply-link" href="/blog/salesforce/salesforce-migration-tool-ant/#respond" style="display:none;">Cancel reply</a></small>
+				</h3>
+						<form id="commentform" class="comment-form">
+				<iframe title="Comment Form" src="https://jetpack.wordpress.com/jetpack-comment/?blogid=87744916&#038;postid=2892&#038;comment_registration=0&#038;require_name_email=1&#038;stc_enabled=1&#038;stb_enabled=1&#038;show_avatars=1&#038;avatar_default=mystery&#038;greeting=Leave+a+Reply&#038;greeting_reply=Leave+a+Reply+to+%25s&#038;color_scheme=light&#038;lang=en_US&#038;jetpack_version=6.8.1&#038;show_cookie_consent=10&#038;has_cookie_consent=0&#038;sig=cf13a6dfe298afbe9fdc74a328a3ade27b81f8df#parent=https%3A%2F%2Fwww.jitendrazaa.com%2Fblog%2Fsalesforce%2Fsalesforce-migration-tool-ant%2F" style="width:100%; height: 430px; border:0;" name="jetpack_remote_comment" class="jetpack_remote_comment" id="jetpack_remote_comment" sandbox="allow-same-origin allow-top-navigation allow-scripts allow-forms allow-popups"></iframe>
+									<!--[if !IE]><!-->
+					<script>
+						document.addEventListener('DOMContentLoaded', function () {
+							var commentForms = document.getElementsByClassName('jetpack_remote_comment');
+							for (var i = 0; i < commentForms.length; i++) {
+								commentForms[i].allowTransparency = false;
+								commentForms[i].scrolling = 'no';
+							}
+						});
+					</script>
+					<!--<![endif]-->
+							</form>
+		</div>
+
+		
+		<input type="hidden" name="comment_parent" id="comment_parent" value="" />
+
+		<p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed</a>.</p>
+</div><!-- .comments-area -->
+
+	</main><!-- .site-main -->
+
+	
+</div><!-- .content-area -->
+
+
+	<aside id="secondary" class="sidebar widget-area" role="complementary">
+		<section id="text-8" class="widget widget_text"><h2 class="widget-title">Search</h2>			<div class="textwidget"><form action="https://www.google.com/cse" id="cse-search-box">
+<div> 
+<input type="hidden" name="cx" value="004474141809639303923:krar9lzpuei"> 
+<input type="hidden" name="ie" value="UTF-8"> 
+<input type="text" name="q" size="28" 
+style="border: 1px solid rgb(126, 157, 185); padding: 2px;  
+background-color: rgb(255, 255, 255); background-position: 0% 50%; background-repeat: no-repeat no-repeat;"> 
+<input type="submit" name="sa" value="Submit"></div>
+<input name="siteurl" type="hidden" value="jitendrazaa.com">
+<input name="ref" type="hidden" value="www.google.com/">
+<input name="ss" type="hidden" value="">
+</form>
+</div>
+		</section><section id="blog_subscription-2" class="widget jetpack_subscription_widget"><h2 class="widget-title">Subscribe via Email</h2>
+			<form action="#" method="post" accept-charset="utf-8" id="subscribe-blog-blog_subscription-2">
+				<div id="subscribe-text"><p>Never miss a post. Provide your email address to get latest blog posts, right into your email box.</p>
+</div>					<p id="subscribe-email">
+						<label id="jetpack-subscribe-label" for="subscribe-field-blog_subscription-2">
+							Email Address						</label>
+						<input type="email" name="email" required="required" class="required" value="" id="subscribe-field-blog_subscription-2" placeholder="Email Address" />
+					</p>
+
+					<p id="subscribe-submit">
+						<input type="hidden" name="action" value="subscribe" />
+						<input type="hidden" name="source" value="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/" />
+						<input type="hidden" name="sub-type" value="widget" />
+						<input type="hidden" name="redirect_fragment" value="blog_subscription-2" />
+												<input type="submit" value="Subscribe" name="jetpack_subscriptions_widget" />
+					</p>
+							</form>
+
+			<script>
+			/*
+			Custom functionality for safari and IE
+			 */
+			(function( d ) {
+				// In case the placeholder functionality is available we remove labels
+				if ( ( 'placeholder' in d.createElement( 'input' ) ) ) {
+					var label = d.querySelector( 'label[for=subscribe-field-blog_subscription-2]' );
+						label.style.clip 	 = 'rect(1px, 1px, 1px, 1px)';
+						label.style.position = 'absolute';
+						label.style.height   = '1px';
+						label.style.width    = '1px';
+						label.style.overflow = 'hidden';
+				}
+
+				// Make sure the email value is filled in before allowing submit
+				var form = d.getElementById('subscribe-blog-blog_subscription-2'),
+					input = d.getElementById('subscribe-field-blog_subscription-2'),
+					handler = function( event ) {
+						if ( '' === input.value ) {
+							input.focus();
+
+							if ( event.preventDefault ){
+								event.preventDefault();
+							}
+
+							return false;
+						}
+					};
+
+				if ( window.addEventListener ) {
+					form.addEventListener( 'submit', handler, false );
+				} else {
+					form.attachEvent( 'onsubmit', handler );
+				}
+			})( document );
+			</script>
+				
+</section><section id="custom_html-3" class="widget_text widget widget_custom_html"><h2 class="widget-title">Trailhead</h2><div class="textwidget custom-html-widget"><a href="https://twitter.com/JitendraZaa" class="twitter-follow-button" data-show-screen-name="true" data-size="large" data-show-count="true">Follow @JitendraZaa</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<!--
+<div style="width:100%; ">
+	<a rel="nofollow" href="https://blog.feedspot.com/salesforce_developer_blogs/" title="Salesforce Developer blogs"><img style="display:block;margin-left:auto;margin-right:auto;" rel="nofollow" src="https://blog.feedspot.com/wp-content/uploads/2017/11/salesforce_developer_216px.png" /> </a>
+</div>
+-->
+
+
+
+<div id="trailhead-widget-container"><img src="https://jitendrazaa.com/loading.gif" /></div>
+  <script async src="https://jitendrazaa.com/Trailhead.php?profileId=00550000007SGlRAAW" type="text/javascript"></script>
+
+</div></section><section id="text-11" class="widget widget_text"><h2 class="widget-title">Popular Posts</h2>			<div class="textwidget"><ul>
+<li>
+<a href="https://www.jitendrazaa.com/blog/salesforce/trailhead-widget-for-any-website/"> Get Trailhead widget for your blog or website  </a>
+</li>
+	<li>
+		<a href="https://www.jitendrazaa.com/blog/salesforce/top-google-chrome-extensions-for-salesforce/"> Top Google chrome extensions for Salesforce </a>
+	</li>
+	<li>
+		<a href="https://www.jitendrazaa.com/blog/salesforce/my-favorite-appexchange-products/"> Top Salesforce tools , AppExchange and Heroku applications </a>
+	</li>
+	<li>
+		<a href="https://www.jitendrazaa.com/blog/salesforce/how-to-start-career-in-salesforce-applicable-for-freshers-as-well/"> How to start career in Salesforce </a>
+	</li>
+<li>
+		<a href="https://www.jitendrazaa.com/blog/salesforce/continuous-integration-vs-continuous-delivery-vs-continuous-deployment/"> Continuous Integration vs. Continuous Delivery vs. Continuous Deployment </a>
+	</li>
+
+	<li>
+		<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-migration-tool-ant/"> Complete Salesforce Deployment Guide using Ant Migration Tool </a>
+	</li>
+	<li>
+		<a href="https://www.jitendrazaa.com/blog/salesforce/auto-generate-package-xml-using-ant-complete-source-code-and-video/"> Auto generate Package.xml using Ant – complete source code and Video </a>
+	</li>
+	<li>
+		<a href="https://www.jitendrazaa.com/blog/salesforce/continuous-integration-in-salesforce-using-jenkins-and-git-video-tutorial/"> Continuous integration in Salesforce Using Jenkins and Git | Video Tutorial </a>
+	</li>
+	<li>
+		<a href="https://www.jitendrazaa.com/blog/salesforce/use-lightning-components-on-external-websites-lightning-out/"> Use Lightning Components on external websites – Lightning Out </a>
+	</li>
+	<li>
+		<a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-interview-questions-part-22/"> Salesforce Interview Questions </a>
+	</li>
+</ul></div>
+		</section><section id="archives-3" class="widget widget_archive"><h2 class="widget-title">Archieve</h2>		<label class="screen-reader-text" for="archives-dropdown-3">Archieve</label>
+		<select id="archives-dropdown-3" name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'>
+			
+			<option value="">Select Month</option>
+				<option value='https://www.jitendrazaa.com/blog/2018/10/'> October 2018 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2018/09/'> September 2018 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2018/08/'> August 2018 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2018/07/'> July 2018 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2018/06/'> June 2018 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2018/05/'> May 2018 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2018/04/'> April 2018 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2018/03/'> March 2018 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2018/02/'> February 2018 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2018/01/'> January 2018 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/12/'> December 2017 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/11/'> November 2017 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/10/'> October 2017 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/09/'> September 2017 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/08/'> August 2017 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/07/'> July 2017 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/06/'> June 2017 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/05/'> May 2017 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/04/'> April 2017 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/03/'> March 2017 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2017/01/'> January 2017 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/12/'> December 2016 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/11/'> November 2016 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/09/'> September 2016 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/08/'> August 2016 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/07/'> July 2016 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/06/'> June 2016 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/05/'> May 2016 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/04/'> April 2016 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/03/'> March 2016 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/02/'> February 2016 &nbsp;(6)</option>
+	<option value='https://www.jitendrazaa.com/blog/2016/01/'> January 2016 &nbsp;(10)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/12/'> December 2015 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/11/'> November 2015 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/10/'> October 2015 &nbsp;(6)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/09/'> September 2015 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/08/'> August 2015 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/07/'> July 2015 &nbsp;(9)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/06/'> June 2015 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/05/'> May 2015 &nbsp;(9)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/04/'> April 2015 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/03/'> March 2015 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/02/'> February 2015 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2015/01/'> January 2015 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2014/12/'> December 2014 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2014/11/'> November 2014 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2014/08/'> August 2014 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2014/07/'> July 2014 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2014/04/'> April 2014 &nbsp;(6)</option>
+	<option value='https://www.jitendrazaa.com/blog/2014/02/'> February 2014 &nbsp;(9)</option>
+	<option value='https://www.jitendrazaa.com/blog/2014/01/'> January 2014 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/12/'> December 2013 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/11/'> November 2013 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/10/'> October 2013 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/09/'> September 2013 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/08/'> August 2013 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/07/'> July 2013 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/06/'> June 2013 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/05/'> May 2013 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/03/'> March 2013 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2013/02/'> February 2013 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/12/'> December 2012 &nbsp;(1)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/09/'> September 2012 &nbsp;(7)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/08/'> August 2012 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/07/'> July 2012 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/06/'> June 2012 &nbsp;(8)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/05/'> May 2012 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/04/'> April 2012 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/03/'> March 2012 &nbsp;(4)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/02/'> February 2012 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2012/01/'> January 2012 &nbsp;(7)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/12/'> December 2011 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/11/'> November 2011 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/10/'> October 2011 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/09/'> September 2011 &nbsp;(5)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/08/'> August 2011 &nbsp;(7)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/07/'> July 2011 &nbsp;(3)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/06/'> June 2011 &nbsp;(8)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/05/'> May 2011 &nbsp;(8)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/04/'> April 2011 &nbsp;(18)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/03/'> March 2011 &nbsp;(31)</option>
+	<option value='https://www.jitendrazaa.com/blog/2011/02/'> February 2011 &nbsp;(24)</option>
+	<option value='https://www.jitendrazaa.com/blog/2010/12/'> December 2010 &nbsp;(7)</option>
+	<option value='https://www.jitendrazaa.com/blog/2010/11/'> November 2010 &nbsp;(2)</option>
+	<option value='https://www.jitendrazaa.com/blog/2010/10/'> October 2010 &nbsp;(15)</option>
+	<option value='https://www.jitendrazaa.com/blog/2010/09/'> September 2010 &nbsp;(35)</option>
+	<option value='https://www.jitendrazaa.com/blog/2010/08/'> August 2010 &nbsp;(26)</option>
+	<option value='https://www.jitendrazaa.com/blog/2010/07/'> July 2010 &nbsp;(36)</option>
+	<option value='https://www.jitendrazaa.com/blog/2010/06/'> June 2010 &nbsp;(14)</option>
+	<option value='https://www.jitendrazaa.com/blog/2010/05/'> May 2010 &nbsp;(27)</option>
+
+		</select>
+		</section><section id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">Latest Comments</h2><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href='http://helptipsweb.wordpress.com' rel='external nofollow' class='url'>gurmukh6849</a></span> on <a href="https://www.jitendrazaa.com/blog/sql/sqlserver/get-table-information-column-name-data-type-in-sql-server/#comment-4936">Get Table information (Column Name, Data Type) in SQL Server</a></li><li class="recentcomments"><span class="comment-author-link">Sathya</span> on <a href="https://www.jitendrazaa.com/blog/sql/sqlserver/export-documents-saved-as-blob-binary-from-sql-server/#comment-4934">Export Documents saved as Blob / Binary from SQL Server</a></li><li class="recentcomments"><span class="comment-author-link">David</span> on <a href="https://www.jitendrazaa.com/blog/about-jitendrazaa/#comment-4933">About Me</a></li><li class="recentcomments"><span class="comment-author-link">Anshul Jain</span> on <a href="https://www.jitendrazaa.com/blog/salesforce/read-query-parameter-in-lightning-component/#comment-4932">Read Query Parameter in Lightning Component</a></li><li class="recentcomments"><span class="comment-author-link">Sounak</span> on <a href="https://www.jitendrazaa.com/blog/salesforce/how-to-start-career-in-salesforce-applicable-for-freshers-as-well/#comment-4931">How to start career in Salesforce &#8211; applicable for Freshers as well</a></li><li class="recentcomments"><span class="comment-author-link">Sravanthi</span> on <a href="https://www.jitendrazaa.com/blog/salesforce/implementing-custom-apex-adapter-for-salesforce-connect/#comment-4927">Implementing Custom Apex Adapter for Salesforce Connect</a></li><li class="recentcomments"><span class="comment-author-link">coobs</span> on <a href="https://www.jitendrazaa.com/blog/salesforce/heroku/access-heroku-postgresql-database-locally-using-docker/#comment-4925">Access Heroku PostgreSQL Database Locally using Docker</a></li><li class="recentcomments"><span class="comment-author-link">Hitendra</span> on <a href="https://www.jitendrazaa.com/blog/salesforce/salesforce-to-salesforce-integration-using-named-credentials-in-just-5-lines-of-code/#comment-4917">Salesforce to Salesforce integration using Named Credentials in 5 lines</a></li><li class="recentcomments"><span class="comment-author-link">nurul</span> on <a href="https://www.jitendrazaa.com/blog/java/snmp/creating-snmp-agent-server-in-java-using-snmp4j/#comment-4916">Creating SNMP Agent (Server) in JAVA using SNMP4j</a></li><li class="recentcomments"><span class="comment-author-link">nurul</span> on <a href="https://www.jitendrazaa.com/blog/java/snmp/creating-snmp-agent-server-in-java-using-snmp4j/#comment-4915">Creating SNMP Agent (Server) in JAVA using SNMP4j</a></li></ul></section><section id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title">Tags</h2><div class="tagcloud"><ul class='wp-tag-cloud' role='list'>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/ajax/" class="tag-cloud-link tag-link-33 tag-link-position-1" style="font-size: 1em;">Ajax</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/angularjs/" class="tag-cloud-link tag-link-35 tag-link-position-2" style="font-size: 1em;">AngularJs</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/ant/" class="tag-cloud-link tag-link-261 tag-link-position-3" style="font-size: 1em;">ANT</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/ant-migration-tool/" class="tag-cloud-link tag-link-262 tag-link-position-4" style="font-size: 1em;">ANT Migration Tool</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/apex/" class="tag-cloud-link tag-link-337 tag-link-position-5" style="font-size: 1em;">Apex</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/asp-net/" class="tag-cloud-link tag-link-43 tag-link-position-6" style="font-size: 1em;">ASP.NET</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/c/" class="tag-cloud-link tag-link-51 tag-link-position-7" style="font-size: 1em;">C#</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/ccb-ormb-spl/" class="tag-cloud-link tag-link-52 tag-link-position-8" style="font-size: 1em;">CC&amp;B /ORMB / SPL</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/continuous-integration/" class="tag-cloud-link tag-link-294 tag-link-position-9" style="font-size: 1em;">continuous integration</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/css/" class="tag-cloud-link tag-link-67 tag-link-position-10" style="font-size: 1em;">CSS</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/dataloader/" class="tag-cloud-link tag-link-72 tag-link-position-11" style="font-size: 1em;">DataLoader</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/eclipse/" class="tag-cloud-link tag-link-86 tag-link-position-12" style="font-size: 1em;">Eclipse</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/egit/" class="tag-cloud-link tag-link-88 tag-link-position-13" style="font-size: 1em;">EGit</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/flow/" class="tag-cloud-link tag-link-352 tag-link-position-14" style="font-size: 1em;">Flow</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/git/" class="tag-cloud-link tag-link-108 tag-link-position-15" style="font-size: 1em;">Git</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/google/" class="tag-cloud-link tag-link-109 tag-link-position-16" style="font-size: 1em;">Google</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/heroku/" class="tag-cloud-link tag-link-342 tag-link-position-17" style="font-size: 1em;">Heroku</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/web/" class="tag-cloud-link tag-link-338 tag-link-position-18" style="font-size: 1em;">HTML</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/integration/" class="tag-cloud-link tag-link-120 tag-link-position-19" style="font-size: 1em;">Integration</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/interview-questions/" class="tag-cloud-link tag-link-124 tag-link-position-20" style="font-size: 1em;">Interview Questions</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/j2ee/" class="tag-cloud-link tag-link-125 tag-link-position-21" style="font-size: 1em;">J2EE</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/java/" class="tag-cloud-link tag-link-329 tag-link-position-22" style="font-size: 1em;">JAVA</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/javascript/" class="tag-cloud-link tag-link-126 tag-link-position-23" style="font-size: 1em;">Javascript</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/jquery/" class="tag-cloud-link tag-link-134 tag-link-position-24" style="font-size: 1em;">JQuery</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/json/" class="tag-cloud-link tag-link-136 tag-link-position-25" style="font-size: 1em;">JSON</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/jsp/" class="tag-cloud-link tag-link-330 tag-link-position-26" style="font-size: 1em;">JSP</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/lightning-component/" class="tag-cloud-link tag-link-311 tag-link-position-27" style="font-size: 1em;">Lightning component</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/nodejs/" class="tag-cloud-link tag-link-267 tag-link-position-28" style="font-size: 1em;">NodeJs</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/oauth/" class="tag-cloud-link tag-link-260 tag-link-position-29" style="font-size: 1em;">OAuth</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/php/" class="tag-cloud-link tag-link-155 tag-link-position-30" style="font-size: 1em;">PHP</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/puzzle-2/" class="tag-cloud-link tag-link-160 tag-link-position-31" style="font-size: 1em;">puzzle</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/release/" class="tag-cloud-link tag-link-167 tag-link-position-32" style="font-size: 1em;">Release</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/salesforce/" class="tag-cloud-link tag-link-331 tag-link-position-33" style="font-size: 1em;">Salesforce</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/sap/" class="tag-cloud-link tag-link-332 tag-link-position-34" style="font-size: 1em;">SAP</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/seo/" class="tag-cloud-link tag-link-341 tag-link-position-35" style="font-size: 1em;">SEO</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/sql/" class="tag-cloud-link tag-link-333 tag-link-position-36" style="font-size: 1em;">SQL</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/sql-server/" class="tag-cloud-link tag-link-292 tag-link-position-37" style="font-size: 1em;">SQL Server</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/students/" class="tag-cloud-link tag-link-357 tag-link-position-38" style="font-size: 1em;">Students</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/telerik/" class="tag-cloud-link tag-link-193 tag-link-position-39" style="font-size: 1em;">Telerik</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/trailhead/" class="tag-cloud-link tag-link-290 tag-link-position-40" style="font-size: 1em;">Trailhead</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/video-tutorial/" class="tag-cloud-link tag-link-212 tag-link-position-41" style="font-size: 1em;">Video Tutorial</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/visualforce/" class="tag-cloud-link tag-link-336 tag-link-position-42" style="font-size: 1em;">Visualforce</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/windows-xp/" class="tag-cloud-link tag-link-219 tag-link-position-43" style="font-size: 1em;">Windows XP</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/wordpress/" class="tag-cloud-link tag-link-223 tag-link-position-44" style="font-size: 1em;">WordPress</a></li>
+	<li><a href="https://www.jitendrazaa.com/blog/tag/xml/" class="tag-cloud-link tag-link-227 tag-link-position-45" style="font-size: 1em;">XML</a></li>
+</ul>
+</div>
+</section>	</aside><!-- .sidebar .widget-area -->
+
+		</div><!-- .site-content -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+							<nav class="main-navigation" role="navigation" aria-label="Footer Primary Menu">
+					<div class="menu-pages-container"><ul id="menu-pages-1" class="primary-menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5167"><a href="https://www.JitendraZaa.com">Home</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-5166"><a href="https://www.jitendrazaa.com/blog/">Blog</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5164"><a href="https://www.jitendrazaa.com/blog/videos/">Videos</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5165"><a href="https://www.jitendrazaa.com/blog/about-jitendrazaa/">About Me</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5400"><a href="https://www.jitendrazaa.com/blog/apex-design-patterns/">Apex Design Patterns – Salesforce</a></li>
+</ul></div>				</nav><!-- .main-navigation -->
+			
+			
+			<div class="site-info">
+				 Since 2009 By Jitendra Zaa <i>(formerly Shivasoft.in)</i>
+			</div><!-- .site-info -->
+		</footer><!-- .site-footer -->
+	</div><!-- .site-inner -->
+</div><!-- .site -->
+
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/www.jitendrazaa.com\/blog\/salesforce\/salesforce-migration-tool-ant\/":2892};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/blog/salesforce/salesforce-migration-tool-ant/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+			
+			<img style="float: right; display: none" class="loading" src="https://www.jitendrazaa.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		
+
+<script type="text/javascript" src="https://www.jitendrazaa.com/blog/wp-content/cache/minify/b6dc4.js"></script>
+
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://www.jitendrazaa.com/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/styles/shCore.css?ver=2.1.364";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://www.jitendrazaa.com/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/styles/shThemeDefault.css?ver=2.1.364";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.clipboardSwf = 'https://www.jitendrazaa.com/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/clipboard.swf';
+	SyntaxHighlighter.config.strings.expandSource = 'show source';
+	SyntaxHighlighter.config.strings.viewSource = 'view source';
+	SyntaxHighlighter.config.strings.copyToClipboard = 'copy to clipboard';
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = 'The code is in your clipboard now';
+	SyntaxHighlighter.config.strings.print = 'print';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.all();
+
+	// Infinite scroll support
+	if ( typeof( jQuery ) !== 'undefined' ) {
+		jQuery( function( $ ) {
+			$( document.body ).on( 'post-load', function() {
+				SyntaxHighlighter.highlight();
+			} );
+		} );
+	}
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201851'></script>
+
+<script type="text/javascript" src="https://www.jitendrazaa.com/blog/wp-content/cache/minify/3c057.js"></script>
+
+<script type='text/javascript'>
+/* <![CDATA[ */
+var screenReaderText = {"expand":"expand child menu","collapse":"collapse child menu"};
+/* ]]> */
+</script>
+
+
+<script type="text/javascript" src="https://www.jitendrazaa.com/blog/wp-content/cache/minify/1f291.js"></script>
+
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.jitendrazaa.com/blog/wp-content/cache/minify/8f7f7.js"></script>
+
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-google-plus-1', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-pocket', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+
+		<!--[if IE]>
+		<script type="text/javascript">
+			if ( 0 === window.location.hash.indexOf( '#comment-' ) ) {
+				// window.location.reload() doesn't respect the Hash in IE
+				window.location.hash = window.location.hash;
+			}
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			(function () {
+				var comm_par_el = document.getElementById( 'comment_parent' ),
+					comm_par = ( comm_par_el && comm_par_el.value ) ? comm_par_el.value : '',
+					frame = document.getElementById( 'jetpack_remote_comment' ),
+					tellFrameNewParent;
+
+				tellFrameNewParent = function () {
+					if ( comm_par ) {
+						frame.src = "https://jetpack.wordpress.com/jetpack-comment/?blogid=87744916&postid=2892&comment_registration=0&require_name_email=1&stc_enabled=1&stb_enabled=1&show_avatars=1&avatar_default=mystery&greeting=Leave+a+Reply&greeting_reply=Leave+a+Reply+to+%25s&color_scheme=light&lang=en_US&jetpack_version=6.8.1&show_cookie_consent=10&has_cookie_consent=0&sig=cf13a6dfe298afbe9fdc74a328a3ade27b81f8df#parent=https%3A%2F%2Fwww.jitendrazaa.com%2Fblog%2Fsalesforce%2Fsalesforce-migration-tool-ant%2F" + '&replytocom=' + parseInt( comm_par, 10 ).toString();
+					} else {
+						frame.src = "https://jetpack.wordpress.com/jetpack-comment/?blogid=87744916&postid=2892&comment_registration=0&require_name_email=1&stc_enabled=1&stb_enabled=1&show_avatars=1&avatar_default=mystery&greeting=Leave+a+Reply&greeting_reply=Leave+a+Reply+to+%25s&color_scheme=light&lang=en_US&jetpack_version=6.8.1&show_cookie_consent=10&has_cookie_consent=0&sig=cf13a6dfe298afbe9fdc74a328a3ade27b81f8df#parent=https%3A%2F%2Fwww.jitendrazaa.com%2Fblog%2Fsalesforce%2Fsalesforce-migration-tool-ant%2F";
+					}
+				};
+
+				
+				if ( 'undefined' !== typeof addComment ) {
+					addComment._Jetpack_moveForm = addComment.moveForm;
+
+					addComment.moveForm = function ( commId, parentId, respondId, postId ) {
+						var returnValue = addComment._Jetpack_moveForm( commId, parentId, respondId, postId ),
+							cancelClick, cancel;
+
+						if ( false === returnValue ) {
+							cancel = document.getElementById( 'cancel-comment-reply-link' );
+							cancelClick = cancel.onclick;
+							cancel.onclick = function () {
+								var cancelReturn = cancelClick.call( this );
+								if ( false !== cancelReturn ) {
+									return cancelReturn;
+								}
+
+								if ( ! comm_par ) {
+									return cancelReturn;
+								}
+
+								comm_par = 0;
+
+								tellFrameNewParent();
+
+								return cancelReturn;
+							};
+						}
+
+						if ( comm_par == parentId ) {
+							return returnValue;
+						}
+
+						comm_par = parentId;
+
+						tellFrameNewParent();
+
+						return returnValue;
+					};
+				}
+
+				
+				// Do the post message bit after the dom has loaded.
+				document.addEventListener( 'DOMContentLoaded', function () {
+					var iframe_url = "https:\/\/jetpack.wordpress.com";
+					if ( window.postMessage ) {
+						if ( document.addEventListener ) {
+							window.addEventListener( 'message', function ( event ) {
+								var origin = event.origin.replace( /^http:\/\//i, 'https://' );
+								if ( iframe_url.replace( /^http:\/\//i, 'https://' ) !== origin ) {
+									return;
+								}
+								jQuery( frame ).height( event.data );
+							});
+						} else if ( document.attachEvent ) {
+							window.attachEvent( 'message', function ( event ) {
+								var origin = event.origin.replace( /^http:\/\//i, 'https://' );
+								if ( iframe_url.replace( /^http:\/\//i, 'https://' ) !== origin ) {
+									return;
+								}
+								jQuery( frame ).height( event.data );
+							});
+						}
+					}
+				})
+
+			})();
+		</script>
+
+		<script type='text/javascript' src='https://stats.wp.com/e-201851.js' async='async' defer='defer'></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:6.8.1',blog:'87744916',post:'2892',tz:'-5',srv:'www.jitendrazaa.com'} ]);
+	_stq.push([ 'clickTrackerInit', '87744916', '2892' ]);
+</script>
+<style>
+.syntaxhighlighter .line .content
+{
+	/*border-left: 3px solid #6CE26C !important; Commented by G2*/
+	border-left: 3px solid #ccc !important;
+	color: #000 !important;
+}
+.syntaxhighlighter .line.alt1
+{
+	/*background-color: #fff !important; commented by G2*/
+	background-color: #F8F8F8 !important;
+}
+.syntaxhighlighter,
+.syntaxhighlighter div,
+.syntaxhighlighter code,
+.syntaxhighlighter table,
+.syntaxhighlighter table td,
+.syntaxhighlighter table tr,
+.syntaxhighlighter table tbody
+{ 
+	line-height: 1.5 !important;
+	font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+	font-weight: normal !important;
+	font-style: normal !important;
+	font-size: 0.98em !important;
+	/*min-height: inherit !important; *//* For IE8, FF & WebKit */
+	/*min-height: auto !important;*/ /* For IE7 */
+	direction: ltr !important;
+}
+
+</style>
+
+<script type="text/javascript">
+/* Pardot Code */
+piAId = '109702';
+piCId = '1082';
+piHostname = 'pi.pardot.com';
+
+(function() {
+	function async_load(){
+		var s = document.createElement('script'); s.type = 'text/javascript';
+		s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+		var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+	}
+	if(window.attachEvent) { window.attachEvent('onload', async_load); }
+	else { window.addEventListener('load', async_load, false); }
+})();
+</script>
+
+</body>
+</html>
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Page Caching using disk: enhanced 
+Minified using disk
+
+Served from: www.jitendrazaa.com @ 2018-12-17 07:45:24 by W3 Total Cache
+-->
