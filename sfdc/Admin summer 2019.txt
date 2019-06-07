@@ -1,0 +1,14 @@
+Administrator Certification Maintenance (Spring 19)
+
+1.On which set of objects can an administrator customize the Stage Setup Flow?
+ A   Leads and opportunities
+2.    How many blocks are available in joined reports?
+A.      5
+3.    An account team is no longer needed. How can the account owner remove the entire team?
+A.      Use Remove all members
+4.    Which set of actions can an administrator take with subtab options in Console?
+A.      Refresh, customize, promote
+5.    For which object can an administrator grant data sharing rules within workflows?
+A.      Opportunity
+6.    Which relative date/time can an administrator specify in a macro when it is run?
+A.      Hours from now
